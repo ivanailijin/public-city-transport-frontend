@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <form class="p-4 border rounded custom-width" [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="email" formControlName="email" aria-describedby="emailHelp">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password" formControlName="password">
+    </div>
+    <div class="mb-3 text-center">
+      <button type="submit" class="btn btn-primary">Login</button>
+    </div>
+    <p class="form-group text-center">Don't have an account yet? <a href="/register-customer">Register</a></p>
+  </form>
+</div>
