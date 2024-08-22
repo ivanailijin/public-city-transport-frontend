@@ -27,44 +27,19 @@ export class CustomerRegistrationComponent {
     educationalBackground: new FormControl('', [Validators.required]),
     }, { validators: this.passwordMatchValidator });
 
-  passwordMatchValidator(group: AbstractControl) {
+    
+    passwordMatchValidator(group: AbstractControl) {
       const password = group.get('password')?.value;
       const passwordConfirmation = group.get('passwordConfirmation')?.value;
-      return password === passwordConfirmation ? null : { passwordMismatch: true };
+      
+      // Vraćamo grešku uvek kada se lozinke ne poklapaju
+      if (password !== passwordConfirmation) {
+        group.get('passwordConfirmation')?.setErrors({ passwordMismatch: true });  // Izmenjeno: Uvek postavljamo grešku na polje passwordConfirmation
+        return { passwordMismatch: true };
+      }
+      
+      return null;
   }
-  getPasswordConfirmationClass(): string {
-    const passwordConfirmationControl = this.registrationForm.get('passwordConfirmation');
-    if (passwordConfirmationControl) {
-      // Ako je polje nevalidno i ili `dirty` ili `touched`, dodaj `has-error` klasu
-      return passwordConfirmationControl.invalid && (passwordConfirmationControl.dirty || passwordConfirmationControl.touched) ? 'is-invalid' : '';
-    }
-    return '';
-  }
-  
-  isPasswordConfirmationInvalid(): boolean {
-    const passwordConfirmationControl = this.registrationForm.get('passwordConfirmation');
-    // Ako postoji greška `passwordMismatch` i polje je `touched`
-    return this.registrationForm.hasError('passwordMismatch') && (passwordConfirmationControl?.touched || false);
-  }
-
-  getPasswordClass(): string {
-    const passwordControl = this.registrationForm.get('password');
-    if (passwordControl) {
-      return (passwordControl.touched || passwordControl.dirty) && passwordControl.invalid ? 'is-invalid' : '';
-    }
-    return '';
-  }
-  
-  isPasswordValid(): boolean {
-    const passwordControl = this.registrationForm.get('password');
-    return passwordControl?.valid && passwordControl?.touched ? true : false;
-  }
-  
-  isPasswordInvalid(): boolean {
-    const passwordControl = this.registrationForm.get('password');
-    return (passwordControl?.invalid && (passwordControl.dirty || passwordControl.touched)) || false;
-  }
-
   get gender() {
     return this.registrationForm.get('gender');
   }

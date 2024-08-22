@@ -24,12 +24,13 @@
     <div class="mb-3">
       <label for="validationEmail" class="form-label">Email</label>
       <div class="input-group has-validation">
-        <input type="text" class="form-control" id="validationEmail" formControlName="email" required>
+        <input type="email" class="form-control" id="validationEmail" formControlName="email" required placeholder="example@gmail.com"
+        pattern='[a-zA-Z0-9.*%±]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}'>
         <div class="valid-feedback">
             Looks good!
           </div>
         <div class="invalid-feedback">
-          Please enter email.
+          Email must be in format 'example@gmail.com'.
         </div>
       </div>
     </div>
@@ -38,12 +39,12 @@
       <input type="password" class="form-control"
         id="validationPassword"
         formControlName="password"
-        [ngClass]="getPasswordClass()"
+        minlength="6"
         required>
-      <div class="valid-feedback" *ngIf="!isPasswordValid()">
+      <div class="valid-feedback">
         Looks good!
       </div>
-      <div class="invalid-feedback" *ngIf="isPasswordInvalid()">
+      <div class="invalid-feedback">
         Password length must be 6 characters.
       </div>
     </div>
@@ -56,12 +57,15 @@
         class="form-control" 
         id="validationConfirmPassword" 
         formControlName="passwordConfirmation" 
-        [ngClass]="getPasswordClass()" 
-        required>
-      <div class="valid-feedback" *ngIf="">
+        required 
+        [ngClass]="{
+          'is-invalid': registrationForm.hasError('passwordMismatch') && registrationForm.get('passwordConfirmation')?.touched,
+          'is-valid': !registrationForm.hasError('passwordMismatch') && registrationForm.get('passwordConfirmation')?.touched && registrationForm.get('password')?.value === registrationForm.get('passwordConfirmation')?.value
+        }">
+      <div class="valid-feedback">
         Looks good!
       </div>
-      <div class="invalid-feedback" *ngIf="isPasswordConfirmationInvalid()">
+      <div class="invalid-feedback" *ngIf="registrationForm.hasError('passwordMismatch') && registrationForm.get('passwordConfirmation')?.touched">
         Passwords do not match.
       </div>
     </div>
@@ -90,33 +94,34 @@
       </div>
       
     <div class="mb-3">
-        <label for="validationPhoneNumber" class="form-label">City</label>
-        <input type="text" class="form-control" id="validationCustom03" formControlName="phoneNumber" required>
+        <label for="validationPhoneNumber" class="form-label">Phone</label>
+        <input type="text" class="form-control" formControlName="phoneNumber" pattern="[0-9]+" required>
         <div class="valid-feedback">
             Looks good!
           </div>
         <div class="invalid-feedback">
-          Please provide a valid city.
+          Phone must contain only numbers!
         </div>
     </div>
     <div class="mb-3">
-        <label for="validationAddress" class="form-label">City</label>
-        <input type="text" class="form-control" id="validationCustom03" formControlName="address" required>
+        <label for="validationAddress" class="form-label">Address</label>
+        <input type="text" class="form-control" id="validationCustom03" formControlName="address" placeholder="Street 42, City" 
+        pattern='^[a-zA-ZšđčćžŠĐČĆŽ\s]+ \d+, [a-zA-ZšđčćžŠĐČĆŽ\s]+$' required>
         <div class="valid-feedback">
             Looks good!
           </div>
         <div class="invalid-feedback">
-          Please provide a valid city.
+          Please provide a valid address. Example: Street 42, City.
         </div>
     </div>
     <div class="mb-3">
-        <label for="validationBirthDate" class="form-label">City</label>
-        <input type="text" class="form-control" id="validationCustom03" formControlName="birthDate" required>
+        <label for="validationBirthDate" class="form-label">Birth Date</label>
+        <input type="date" class="form-control" id="validationCustom03" formControlName="birthDate" required>
         <div class="valid-feedback">
             Looks good!
           </div>
         <div class="invalid-feedback">
-          Please provide a valid city.
+          Please provide a valid birth date.
         </div>
     </div>
     <div class="col-12">
