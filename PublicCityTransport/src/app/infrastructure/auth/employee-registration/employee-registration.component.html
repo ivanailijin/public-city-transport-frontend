@@ -1,1 +1,144 @@
-<p>employee-registration works!</p>
+<div class="d-flex justify-content-center align-items-center mt-5 mb-5">
+    <div class="card shadow-lg p-4 custom-width" style="border-radius: 10px; border: 2px solid #ADD8E6; background-color: #f0f8ff;">
+        <h2 class="text-center mb-4" style="color: #4682B4;">Employee Registration</h2>
+        <form class="row g-3 needs-validation" [formGroup]="registrationForm" (ngSubmit)="register()" novalidate>
+            <div class="mb-2">
+                <label for="validationName" class="form-label">First name</label>
+                <input type="text" class="form-control" id="validationName" formControlName="name" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter first name.
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="validationSurname" class="form-label">Last name</label>
+                <input type="text" class="form-control" id="validationSurname" formControlName="surname" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter last name.
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="validationEmail" class="form-label">Email</label>
+                <div class="input-group has-validation">
+                    <input type="email" class="form-control" id="validationEmail" formControlName="email" required placeholder="example@gmail.com" 
+                    [ngClass]="{ 'is-invalid': registrationForm.get('email')?.invalid && formSubmitted}">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback" *ngIf="registrationForm.get('email')?.invalid && formSubmitted">
+                        Email must be in format 'example@gmail.com'.
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="validationPassword" class="form-label">Password</label>
+                <input type="password" class="form-control"
+                    id="validationPassword"
+                    formControlName="password"
+                    minlength="6"
+                    required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Password length must be 6 characters.
+                </div>
+            </div>
+            
+            <div class="mb-2">
+                <label for="validationConfirmPassword" class="form-label">
+                    Confirm Password
+                </label>
+                <input type="password" 
+                    class="form-control" 
+                    id="validationConfirmPassword" 
+                    formControlName="passwordConfirmation" 
+                    required 
+                    [ngClass]="{
+                    'is-invalid': registrationForm.hasError('passwordMismatch') && registrationForm.get('passwordConfirmation')?.touched,
+                    'is-valid': !registrationForm.hasError('passwordMismatch') && registrationForm.get('passwordConfirmation')?.touched && registrationForm.get('password')?.value === registrationForm.get('passwordConfirmation')?.value
+                    }">
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback" *ngIf="registrationForm.hasError('passwordMismatch') && registrationForm.get('passwordConfirmation')?.touched">
+                    Passwords do not match.
+                </div>
+            </div>
+            <div class="mb-2">
+                <label class="form-label" for="validationGender">Gender</label>
+                <div class="d-flex ms-3">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input mt-2" type="radio" name="gender" id="male" value="male" formControlName="gender" required>
+                        <label class="form-check-label border p-2 rounded me-2" for="male">
+                        Male
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input mt-2" type="radio" name="gender" id="female" value="female" formControlName="gender" required>
+                        <label class="form-check-label border p-2 rounded me-2" for="female">
+                        Female
+                        </label>
+                    </div>
+                </div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please select a valid gender.
+                </div>
+            </div>
+            
+            <div class="mb-2">
+                <label for="validationPhoneNumber" class="form-label">Phone</label>
+                <input type="text" class="form-control" formControlName="phoneNumber" pattern="[0-9]+" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Phone must contain only numbers!
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="validationAddress" class="form-label">Address</label>
+                <input type="text" class="form-control" id="validationCustom03" formControlName="address" placeholder="Street 42, City" 
+                pattern='^[a-zA-Z\s]+ \d+, [a-zA-Z\s]+$' required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please provide a valid address. Example: Street 42, City.
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="validationBirthDate" class="form-label">Birth Date</label>
+                <input type="date" class="form-control" id="validationCustom03" formControlName="birthDate" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please provide a valid birth date.
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="validationEducationalBackground" class="form-label">Educational Background</label>
+                <input type="text" class="form-control" id="validationEducationalBackground" formControlName="educationalBackground" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter educational background.
+                </div>
+            </div>
+            <div class="col-12 text-center">
+              <button class="btn mt-3" type="submit" style="background-color: #4682B4; color: white; width:75%; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px;">Register</button>
+          </div>
+        </form>
+    </div>
+  </div>
+  

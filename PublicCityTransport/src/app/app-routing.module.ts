@@ -6,8 +6,8 @@ import { CustomerRegistrationComponent } from './infrastructure/auth/customer-re
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'register-employee', component: EmployeeRegistrationComponent },
-  { path: 'register-customer', component: CustomerRegistrationComponent }
+  { path: 'register', component: EmployeeRegistrationComponent },
+  { path: 'register-customer', component: CustomerRegistrationComponent },
 ];
 
 @NgModule({
