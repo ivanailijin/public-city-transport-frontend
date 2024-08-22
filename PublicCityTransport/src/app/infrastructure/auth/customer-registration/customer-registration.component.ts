@@ -12,6 +12,8 @@ import { Gender, UserRole } from '../model/user.model';
 })
 export class CustomerRegistrationComponent {
 
+  formSubmitted = false;
+
   constructor(private router: Router, private authService: AuthService) {}
 
   registrationForm = new FormGroup({
@@ -24,7 +26,6 @@ export class CustomerRegistrationComponent {
     phoneNumber: new FormControl('', [Validators.required, Validators.pattern('[0-9]+')]),
     address: new FormControl('', [Validators.required]),
     birthDate: new FormControl('', [Validators.required]),
-    educationalBackground: new FormControl('', [Validators.required]),
     }, { validators: this.passwordMatchValidator });
 
     
@@ -32,9 +33,8 @@ export class CustomerRegistrationComponent {
       const password = group.get('password')?.value;
       const passwordConfirmation = group.get('passwordConfirmation')?.value;
       
-      // Vraćamo grešku uvek kada se lozinke ne poklapaju
       if (password !== passwordConfirmation) {
-        group.get('passwordConfirmation')?.setErrors({ passwordMismatch: true });  // Izmenjeno: Uvek postavljamo grešku na polje passwordConfirmation
+        group.get('passwordConfirmation')?.setErrors({ passwordMismatch: true });
         return { passwordMismatch: true };
       }
       
@@ -83,6 +83,8 @@ export class CustomerRegistrationComponent {
   
 
   register(): void {
+    this.formSubmitted = true;
+
     const birthDateValue = this.registrationForm.value.birthDate;
     const birthDate = birthDateValue ? new Date(birthDateValue) : new Date();
 
@@ -99,11 +101,11 @@ export class CustomerRegistrationComponent {
     };
 
     if (this.registrationForm.valid) {
-      // this.authService.register(registration).subscribe({
-      //   next: () => {
-      //     this.router.navigate(['login']);
-      //   }
-      // });
+      this.authService.registerCustomer(registration).subscribe({
+        next: () => {
+          this.router.navigate(['login']);
+        }
+      });
     }
   }
 

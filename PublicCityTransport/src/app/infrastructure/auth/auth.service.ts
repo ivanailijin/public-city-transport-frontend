@@ -8,6 +8,7 @@ import { User, UserRole } from './model/user.model';
 import { AuthenticationResponse } from './model/authentication-response.model';
 import { Login } from './model/login.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { CustomerRegistration } from './model/registration.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,6 +28,17 @@ export class AuthService {
             this.setUser();
           })
         );
+    }
+
+    registerCustomer(registration: CustomerRegistration): Observable<AuthenticationResponse> {
+      return this.http
+      .post<AuthenticationResponse>(environment.apiHost + 'users/register-customer', registration)
+      .pipe(
+        tap((authenticationResponse) => {
+          this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
+          this.setUser();
+        })
+      );
     }
 
     private setUser(): void {
