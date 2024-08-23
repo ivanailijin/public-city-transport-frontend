@@ -7,10 +7,12 @@ import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
+import { LayoutModule } from './feature-modules/layout/layout.module';
+import { StakeholdersModule } from './feature-modules/stakeholders/stakeholders.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -19,7 +21,8 @@ import { SharedModule } from './shared/shared.module';
     FormsModule,
     SharedModule,
     HttpClientModule,
-    
+    LayoutModule,
+    StakeholdersModule
   ],
   providers: [
     {

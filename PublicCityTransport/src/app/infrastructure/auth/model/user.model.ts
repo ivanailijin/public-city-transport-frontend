@@ -31,13 +31,13 @@ export enum UserRole {
 }
 
 export enum EmployeeRole {
-    conductor,
+    conductor = 0,
     driver,
     dispatcher,
     director
 }
 export enum Gender {
-    male,
+    male = 0,
     female
 }
 

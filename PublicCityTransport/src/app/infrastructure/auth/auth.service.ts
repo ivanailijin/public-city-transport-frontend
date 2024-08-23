@@ -52,6 +52,22 @@ export class AuthService {
       );
     }
 
+    checkIfUserExists(): void {
+      const accessToken = this.tokenStorage.getAccessToken();
+      if (accessToken == null) {
+        return;
+      }
+      this.setUser();
+    }
+
+    logout(): void {
+      this.router.navigate(['/login']).then(_ => {
+        this.tokenStorage.clear();
+        this.user$.next({email: "", id: 0, role: 0 });
+        }
+      );
+    }
+  
     private setUser(): void {
       const jwtHelperService = new JwtHelperService();
       const accessToken = this.tokenStorage.getAccessToken() || "";

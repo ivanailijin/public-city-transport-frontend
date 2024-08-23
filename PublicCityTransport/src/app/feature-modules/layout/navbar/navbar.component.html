@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-light sticky-top  bg-light" style="background-color: #a3d7e9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+  <a class="navbar-brand" href="#" style="margin-left: 20px;">
+    <img src="https://online.gspns.rs/sr/fileGetter/logo/JGSP-Novi-Sad-logo-2.jpg" alt="jgsp" width="90" height="30">
+  </a>
+    <ul class="navbar-nav mx-auto d-flex justify-content-center">
+      <li class="nav-item ms-2">
+        <a class="nav-link" href="/">Tickets</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">NSmart</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">Driving order</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">Bus lines</a>
+      </li>
+      <li class="nav-item dropdown" *ngIf="user && user.role == 0 && user.email.trim().length > 0">
+        <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Bus lines
+        </a>
+      </li>
+    </ul>
+  <ul class="navbar-nav" style="margin-right: 20px;">
+    <li class="nav-item" *ngIf="user && user.email === ''">
+      <a class="nav-link" style="background-color: #4682B4; color: white; width:100%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;" href="/login">Login</a>
+    </li>
+    <li class="nav-item" *ngIf="user && user.role == 0 && user.email !== ''">
+      <a class="nav-link"  href="/user-profile">Profile</a>
+    </li>
+    <li class="nav-item" *ngIf="user && user.role == 1 && user.email !== ''">
+      <a class="nav-link"  href="/company-admin-profile">Profile</a>
+    </li>
+    <li class="nav-item" *ngIf="user && user.email !== ''">
+      <a class="nav-link" (click)="onLogout()" style="background-color: #4682B4; color: white; width:100%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px; cursor: pointer;">Logout</a>
+    </li>
+  </ul>
+</nav>
