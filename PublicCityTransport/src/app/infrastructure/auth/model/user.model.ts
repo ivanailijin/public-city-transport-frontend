@@ -31,7 +31,7 @@ export enum UserRole {
 }
 
 export enum EmployeeRole {
-    conductor = 0,
+    manager = 0,
     driver,
     dispatcher,
     director

@@ -12,13 +12,17 @@
       <li class="nav-item">
         <a class="nav-link" href="/">Driving order</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/">Bus lines</a>
-      </li>
-      <li class="nav-item dropdown" *ngIf="user && user.role == 0 && user.email.trim().length > 0">
+      <li class="nav-item dropdown" *ngIf="user && employee.employeeRole == 0 && user.email.trim().length > 0">
         <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           Bus lines
         </a>
+        <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item">Add new bus</a></li>
+          <li><a class="dropdown-item">Add new busline</a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">Employees</a>
       </li>
     </ul>
   <ul class="navbar-nav" style="margin-right: 20px;">

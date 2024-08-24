@@ -135,6 +135,22 @@
                     Please enter educational background.
                 </div>
             </div>
+            <div class="mb-2">
+                <label for="validationEmployeeRole" class="form-label">Job title</label>
+                <select class="form-select" id="validationEmployeeRole" formControlName="employeeRole" required>
+                  <option value="" disabled selected>Select a job title</option>
+                  <option value="manager">Manager</option>
+                  <option value="driver">Driver</option>
+                  <option value="dispatcher">Dispatcher</option>
+                  <option value="qa"></option>
+                </select>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback">
+                  Please select job title.
+                </div>
+              </div>
             <div class="col-12 text-center">
               <button class="btn mt-3" type="submit" style="background-color: #4682B4; color: white; width:75%; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px;">Register</button>
           </div>
