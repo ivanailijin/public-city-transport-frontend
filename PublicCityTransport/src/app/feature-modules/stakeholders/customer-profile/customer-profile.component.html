@@ -1,0 +1,101 @@
+<div class="d-flex justify-content-center align-items-center mt-5 mb-5 flex-column">
+    <h3 class="mb-4 text-start" style="color: #4682B4;">Profile</h3>
+    <div class="card shadow-lg p-4 custom-width border" style="border-radius: 10px; background-color: #f7f9fc;">
+        <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" class="row g-3 needs-validation" novalidate>
+            <div class="mb-2">
+                <label for="validationName" class="form-label">First name</label>
+                <input type="text" class="form-control" id="validationName" formControlName="name" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter first name.
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="validationSurname" class="form-label">Last name</label>
+                <input type="text" class="form-control" id="validationSurname" formControlName="surname" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter last name.
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="validationEmail" class="form-label">Email</label>
+                <div class="input-group has-validation">
+                    <input type="email" class="form-control" id="validationEmail" formControlName="email" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback" *ngIf="profileForm.get('email')?.invalid && (profileForm.get('email')?.dirty || formSubmitted)">
+                        Email must be in format 'example@gmail.com'.
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="editMode">
+                <label (click)="switchChangePasswordMode(true)" class="change-password-label" *ngIf="!changePassword">
+                  Change password?
+                </label>
+                <label (click)="switchChangePasswordMode(false)" class="change-password-label" *ngIf="changePassword">
+                  Don't change password
+                </label>
+              </div>
+        
+              <div *ngIf="changePassword && editMode">
+                <div class="mb-2">
+                    <label for="validationPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="validationPassword" formControlName="newPassword" minlength="6" required [ngClass]="{ 'is-invalid': profileForm.get('newPassword')?.invalid && (profileForm.get('newPassword')?.touched || formSubmitted) }">
+                    <div class="invalid-feedback">
+                        Password length must be 6 characters.
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label for="validationConfirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password"
+                           class="form-control"
+                           id="validationConfirmPassword"
+                           formControlName="passwordConfirmation"
+                           required
+                           [ngClass]="{
+                              'is-invalid': changePassword && (profileForm.hasError('passwordMismatch') && profileForm.get('passwordConfirmation')?.touched || profileForm.get('passwordConfirmation')?.invalid && profileForm.get('passwordConfirmation')?.touched),
+                                
+                              }">
+                    <div class="invalid-feedback" *ngIf="changePassword && profileForm.hasError('passwordMismatch') && profileForm.get('passwordConfirmation')?.touched">
+                      Passwords do not match.
+                    </div>
+                </div>
+              </div>
+            <div class="mb-2">
+                <label for="validationPhoneNumber" class="form-label">Phone</label>
+                <input type="text" class="form-control" id="validationPhoneNumber" formControlName="phoneNumber" pattern="[0-9]+" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Phone must contain only numbers!
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="validationAddress" class="form-label">Address</label>
+                <input type="text" class="form-control" id="validationAddress" formControlName="address" placeholder="Street 42, City" pattern='^[a-zA-Z\s]+ \d+, [a-zA-Z\s]+$' required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please provide a valid address. Example: Street 42, City.
+                </div>
+            </div>
+            <div class="label-item">
+                <label class="undo" *ngIf="editMode" (click)="switchMode(false)">Undo</label>
+            </div>
+
+            <div class="col-12 text-center" *ngIf="editMode">
+                <button class="btn mt-3" type="submit" style="background-color: #4682B4; color: white; width:65%; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px;">Save</button>
+              </div>
+        </form>
+        <button *ngIf="!editMode" (click)="switchMode(true)">Edit profile</button>
+    </div>
+</div>

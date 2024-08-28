@@ -1,0 +1,14 @@
+.custom-width {
+    width: 35%; 
+    height: 40%;
+}
+
+.undo {
+    margin-top: 22px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 12px;
+  }
+  .change-password-label {
+    cursor: pointer;
+  }
