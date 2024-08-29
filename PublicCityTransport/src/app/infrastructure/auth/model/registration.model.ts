@@ -1,4 +1,4 @@
-import { Gender, UserRole} from "./user.model";
+import { EmployeeRole, Gender, UserRole} from "./user.model";
 
 export interface UserRegistration {
     email: string;
@@ -9,6 +9,7 @@ export interface UserRegistration {
 }
 
 export interface EmployeeRegistration extends UserRegistration {
+    employeeRole: EmployeeRole;
     gender: Gender;
     phoneNumber: string;
     address: string;

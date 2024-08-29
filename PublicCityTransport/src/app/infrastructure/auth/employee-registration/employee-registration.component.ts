@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Gender, UserRole } from '../model/user.model';
+import { EmployeeRole, Gender, UserRole } from '../model/user.model';
 import { EmployeeRegistration } from '../model/registration.model';
 
 @Component({
@@ -21,6 +21,7 @@ export class EmployeeRegistrationComponent {
     email: new FormControl('', [Validators.required, Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     passwordConfirmation: new FormControl ('', [Validators.required, Validators.minLength(6)]),
+    employeeRole: new FormControl ('', [Validators.required]),
     gender: new FormControl('', [Validators.required]),
     phoneNumber: new FormControl('', [Validators.required, Validators.pattern('[0-9]+')]),
     address: new FormControl('', [Validators.required]),
@@ -94,6 +95,7 @@ export class EmployeeRegistrationComponent {
       name: this.registrationForm.value.name || "",
       surname: this.registrationForm.value.surname || "",
       role : UserRole.customer,
+      employeeRole: this.getEmployeeRoleValue(this.registrationForm.value.employeeRole || 'manager'),
       gender: this.getGenderValue(this.registrationForm.value.gender || 'male'),
       phoneNumber: this.registrationForm.value.phoneNumber || "",
       address: this.registrationForm.value.address || "",
@@ -119,6 +121,21 @@ export class EmployeeRegistrationComponent {
         return Gender.female;
       default:
         return Gender.male;
+    }
+  }
+
+  private getEmployeeRoleValue(role: string): EmployeeRole {
+    switch (role) {
+      case 'manager':
+        return EmployeeRole.manager;
+      case 'driver':
+        return EmployeeRole.driver;
+      case 'dispatcher':
+        return EmployeeRole.dispatcher;
+      case 'director':
+        return EmployeeRole.director;
+      default:
+        return EmployeeRole.manager;
     }
   }
 }

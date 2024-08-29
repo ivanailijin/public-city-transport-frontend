@@ -17,7 +17,6 @@ export interface Employee extends User {
 }
 
 export interface Customer extends User {
-    
     gender: Gender;
     phoneNumber: string;
     address: string;
