@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { LayoutModule } from './feature-modules/layout/layout.module';
 import { StakeholdersModule } from './feature-modules/stakeholders/stakeholders.module';
+import { TransportModule } from './feature-modules/transport/transport.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { StakeholdersModule } from './feature-modules/stakeholders/stakeholders.
     SharedModule,
     HttpClientModule,
     LayoutModule,
-    StakeholdersModule
+    StakeholdersModule,
+    TransportModule
   ],
   providers: [
     {

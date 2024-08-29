@@ -1,0 +1,82 @@
+<div class="d-flex justify-content-center align-items-center mt-5 mb-5 flex-column">
+    <h3 class="text-center mb-4" style="color: #4682B4;">Buses</h3>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createBusModal" style="background-color: #4682B4; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px;" (click)="resetForm()">
+        Create New Bus
+    </button>
+</div>
+
+
+<div class="modal fade" id="createBusModal" tabindex="-1" aria-labelledby="createBusModal" aria-hidden="true" #createBusModal>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="createBusModalLabel">Create new bus</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center align-items-center mt-5 mb-5 flex-column">
+                    <h3 class="text-center mb-4" style="color: #4682B4;">Bus Creation</h3>
+                    <div class="card shadow-lg p-4 custom-width border" style="border-radius: 10px; background-color: #f7f9fc;">
+                      <form class="row g-3 needs-validation" [formGroup]="busRegistrationForm" novalidate>
+                          <div class="mb-2">
+                              <label for="garageNumber" class="form-label">Garage Number</label>
+                              <input type="text" class="form-control" id="garageNumber" formControlName="garageNumber" required>
+                              <div class="valid-feedback">
+                                  Looks good!
+                              </div>
+                              <div class="invalid-feedback">
+                                  Please enter first name.
+                              </div>
+                          </div>
+                          <div class="mb-2">
+                              <label for="licencePlate" class="form-label">Licence Plate</label>
+                              <input type="text" class="form-control" id="licencePlate" formControlName="licencePlate" required>
+                              <div class="valid-feedback">
+                                  Looks good!
+                              </div>
+                              <div class="invalid-feedback">
+                                  Please enter bus licence plate.
+                              </div>
+                          </div>
+                          <div class="mb-2">
+                              <label for="busBrand" class="form-label">Bus Brand</label>
+                              <div class="input-group has-validation">
+                                  <input type="text" class="form-control" id="busBrand" formControlName="busBrand" required>
+                                  <div class="valid-feedback">
+                                      Looks good!
+                                  </div>
+                                  <div class="invalid-feedback">
+                                      Please enter bus brand.
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="mb-2">
+                              <label for="yearOfProduction" class="form-label">Year Of Production</label>
+                              <input type="text" class="form-control" formControlName="yearOfProduction" pattern="[0-9]+" maxlength="4" required>
+                              <div class="valid-feedback">
+                                  Looks good!
+                              </div>
+                              <div class="invalid-feedback">
+                                  Year Of Production must contain only numbers!
+                              </div>
+                          </div>
+                          <div class="mb-2">
+                            <label for="arrivalDate" class="form-label">Arrival Date</label>
+                            <input type="date" class="form-control" id="arrivalDate" formControlName="arrivalDate" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide a valid bus arrival date.
+                            </div>
+                        </div>
+                          <div class="col-12 text-center">
+                            <button class="btn mt-3" id="createButton" type="submit" style="background-color: #4682B4; color: white; width:75%; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px;" data-bs-dismiss="modal">Create</button>
+                        </div>
+                      </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
