@@ -32,14 +32,14 @@
       </li>
     </ul>
   <ul class="navbar-nav" style="margin-right: 20px;">
-    <li class="nav-item" *ngIf="user && user.email === ''">
-      <a class="nav-link" style="background-color: #4682B4; color: white; width:100%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;" href="/login">Login</a>
-    </li>
     <li class="nav-item" *ngIf="user && user.role == 0 && user.email !== ''">
-      <a class="nav-link"  href="/user-profile">Profile</a>
+      <a class="nav-link"  href="/customer-profile">Profile</a>
     </li>
     <li class="nav-item" *ngIf="user && user.role == 1 && user.email !== ''">
-      <a class="nav-link"  href="/company-admin-profile">Profile</a>
+      <a class="nav-link"  href="/employee-profile">Profile</a>
+    </li>
+    <li class="nav-item" *ngIf="user && user.email === ''">
+      <a class="nav-link" style="background-color: #4682B4; color: white; width:100%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;" href="/login">Login</a>
     </li>
     <li class="nav-item" *ngIf="user && user.email !== ''">
       <a class="nav-link" (click)="onLogout()" style="background-color: #4682B4; color: white; width:100%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px; cursor: pointer;">Logout</a>

@@ -71,13 +71,14 @@ export class AuthService {
     private setUser(): void {
       const jwtHelperService = new JwtHelperService();
       const accessToken = this.tokenStorage.getAccessToken() || "";
+      const rawRole = jwtHelperService.decodeToken(accessToken)[
+        'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
+      ];
       const user: User = {
         id: +jwtHelperService.decodeToken(accessToken).id,
         email: jwtHelperService.decodeToken(accessToken).email,
-        role: jwtHelperService.decodeToken(accessToken)[
-          'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
-        ],
+        role: UserRole[rawRole as keyof typeof UserRole]
       };
       this.user$.next(user);
-  }
+    }
 }

@@ -22,11 +22,11 @@ export class AuthGuard implements CanActivate {
     | boolean
     | UrlTree {
         
-   // const user: User = this.authService.user$.getValue();
-    // if (user.email === '') {
-    //   this.router.navigate(['login']);
-    //   return false;
-    // }
+   const user: User = this.authService.user$.getValue();
+    if (user.email === '') {
+      this.router.navigate(['login']);
+      return false;
+    }
     return true;
   }
 }
