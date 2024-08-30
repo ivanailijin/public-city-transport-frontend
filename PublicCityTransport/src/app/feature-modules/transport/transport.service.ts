@@ -4,6 +4,7 @@ import { Bus } from './model/bus.model';
 import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
 import { PagedResults } from 'src/app/shared/model/paged-results';
+import { Line } from './model/line.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class TransportService {
   constructor(private http: HttpClient) { }
 
 //BUSES
-  getAll(): Observable<PagedResults<Bus>> {
+  getAllBuses(): Observable<PagedResults<Bus>> {
     return this.http.get<PagedResults<Bus>>(environment.apiHost + 'bus/getAll');
   }
 
@@ -37,4 +38,20 @@ export class TransportService {
     return this.http.get<Bus>(`${environment.apiHost}bus/removeDriver/${driverId}/${busId}`);
   }
 
+//LINES
+  getAllLines(): Observable<PagedResults<Line>> {
+    return this.http.get<PagedResults<Line>>(environment.apiHost + 'line/getAll');
+  }
+
+  createLine(line: Line): Observable<Line> {
+    return this.http.post<Line>(environment.apiHost + 'line/create', line);
+  }
+
+  updateLine(line: Line): Observable<Line> {
+    return this.http.put<Line>(environment.apiHost + 'line/update/' + line.id, line)
+  }
+
+  deleteLine(id: number): Observable<Line> {
+    return this.http.delete<Line>(environment.apiHost + 'line/delete/' + id);
+  }
 }

@@ -1,1 +1,65 @@
-<p>create-line-form works!</p>
+<div class="d-flex justify-content-center align-items-center mt-5 mb-5 flex-column">
+    <h3 class="text-center mb-4" style="color: #4682B4;">Line Creation</h3>
+    <div class="card shadow-lg p-4 custom-width border" style="border-radius: 10px; background-color: #f7f9fc;">
+      <form class="row g-3 needs-validation" [formGroup]="lineRegistrationForm" (ngSubmit)="createLine()" novalidate>
+          <div class="mb-2">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" class="form-control" id="name" pattern="[0-9]+" maxlength="2" formControlName="name" required>
+              <div class="valid-feedback">
+                  Looks good!
+              </div>
+              <div class="invalid-feedback">
+                  Please enter line name.
+              </div>
+          </div>
+          <div class="mb-2">
+            <label class="form-label" for="lineType">Type</label>
+            <div class="d-flex ms-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input mt-2" type="radio" name="lineType" id="city" value="city" formControlName="lineType" required>
+                    <label class="form-check-label border p-2 rounded me-2" for="city">
+                    City
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input mt-2" type="radio" name="lineType" id="suburban" value="suburban" formControlName="lineType" required>
+                    <label class="form-check-label border p-2 rounded me-2" for="suburban">
+                    Suburban
+                    </label>
+                </div>
+            </div>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please select line type.
+            </div>
+        </div>
+          <div class="mb-2">
+              <label for="length" class="form-label">Length</label>
+              <div class="input-group has-validation">
+                  <input type="text" class="form-control" id="length" pattern="^\d+(\.\d{1,2})?$" maxlength="5" formControlName="length" placeholder="3 (km)" required>
+                  <div class="valid-feedback">
+                      Looks good!
+                  </div>
+                  <div class="invalid-feedback">
+                      Please enter line length (km). Example: 2, 2.5, 2.55, 20.55
+                  </div>
+              </div>
+          </div>
+          <div class="mb-2">
+              <label for="time" class="form-label">Time</label>
+              <input type="number" class="form-control" formControlName="time" pattern="[0-9]+" maxlength="2" placeholder="20 (min)" required>
+              <div class="valid-feedback">
+                  Looks good!
+              </div>
+              <div class="invalid-feedback">
+                  Please enter line time length (min).
+              </div>
+          </div>
+          <div class="col-12 text-center">
+            <button class="btn mt-3" id="createButton" type="submit" style="background-color: #4682B4; color: white; width:75%; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px;">Create</button>
+        </div>
+      </form>
+  </div>
+</div>

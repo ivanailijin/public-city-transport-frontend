@@ -15,7 +15,7 @@ export class AllBusesComponent implements OnInit{
   buses: Bus[] = [];
 
   ngOnInit(): void {
-    this.transportService.getAll().subscribe(
+    this.transportService.getAllBuses().subscribe(
       (result: any) => {
         this.buses = result.results;
         console.log(this.buses)
