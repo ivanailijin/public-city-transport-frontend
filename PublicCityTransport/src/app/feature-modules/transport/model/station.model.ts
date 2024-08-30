@@ -1,4 +1,4 @@
-export interface StationRegistration {
+export interface Station {
     id: number;
     name: string;
     latitude: number;

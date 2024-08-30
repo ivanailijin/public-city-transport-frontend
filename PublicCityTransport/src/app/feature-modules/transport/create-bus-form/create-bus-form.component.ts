@@ -1,9 +1,8 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BusRegistration } from '../model/bus.model';
+import { Bus } from '../model/bus.model';
 import { TransportService } from '../transport.service';
-import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-create-bus-form',
@@ -43,13 +42,12 @@ export class CreateBusFormComponent implements OnInit{
     })();
   }
 
-  @ViewChild('createBusModal') createBusModal!: ElementRef;
-
   createBus(): void {
     const arrivalDateValue = this.busRegistrationForm.value.arrivalDate;
     const arrivalDate = arrivalDateValue ? new Date(arrivalDateValue) : new Date();
 
-    const busRegistration: BusRegistration = {
+    const busRegistration: Bus = {
+      id: 0,
       garageNumber: this.busRegistrationForm.value.garageNumber || "",
       licencePlate: this.busRegistrationForm.value.licencePlate || "",
       busBrand: this.busRegistrationForm.value.busBrand || "",
@@ -60,14 +58,9 @@ export class CreateBusFormComponent implements OnInit{
     if (this.busRegistrationForm.valid) {
       this.transportService.createBus(busRegistration).subscribe({
         next: () => {
+          this.router.navigate(['all-buses'])
         }
       });
-    }else{
-      return;
     }
-  }
-
-  resetForm(): void{
-    this.busRegistrationForm.reset();
   }
 }

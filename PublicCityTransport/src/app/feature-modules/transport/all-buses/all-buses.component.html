@@ -1,0 +1,34 @@
+<div class="container mt-5 mb-5">
+    <div class="mb-4">
+      <div class="d-flex align-items-center">
+        <h3 class="" style="color: #4682B4; width: 100%; max-width: 520px; margin-left:24%">
+          Buses
+        </h3>
+        <button type="button" (click)="navigateToCreate()" class="btn btn-primary" style="background-color: #4682B4; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px;">
+          Create New Bus
+        </button>
+      </div>
+    </div>
+  
+    <div class="d-flex flex-wrap justify-content-center">
+      <div class="card mb-3 mx-2" *ngFor="let bus of buses" style="max-width: 670px; max-height:230px">
+        <div class="row g-0">
+          <div class="col-md-4 p-1">
+            <img src="assets/pictures/bus-icon.jpg" class="img-fluid rounded-start" alt="Bus Icon">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body mt-3">
+              <h5 class="card-title mb-4" style="color: #424242">{{bus.licencePlate}}</h5>
+              <p class="card-text"><span style="font-weight: 500; color: #5a5a5a;">Garage Number • </span> {{bus.garageNumber}}</p>
+              <p class="card-text"><span style="font-weight: 500; color: #5a5a5a;">Bus Brand • </span> {{bus.busBrand}}</p>
+              <p class="card-text"><span style="font-weight: 500; color: #5a5a5a;">Year of Production • </span> {{bus.yearOfProduction}}</p>
+              <p class="card-text" style="position: absolute; top: 33px; right: 30px; font-size: 14px; color: #6c757d;">
+                Arrival Date - {{bus.arrivalDate | date:'shortDate'}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+  

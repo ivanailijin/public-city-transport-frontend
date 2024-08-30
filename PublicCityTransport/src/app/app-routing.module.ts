@@ -10,6 +10,9 @@ import { AuthGuard } from './infrastructure/auth/auth.guard';
 import { CreateBusFormComponent } from './feature-modules/transport/create-bus-form/create-bus-form.component';
 import { CreateLineFormComponent } from './feature-modules/transport/create-line-form/create-line-form.component';
 import { CreateStationFormComponent } from './feature-modules/transport/create-station-form/create-station-form.component';
+import { AllBusesComponent } from './feature-modules/transport/all-buses/all-buses.component';
+import { AllLinesComponent } from './feature-modules/transport/all-lines/all-lines.component';
+import { AllStationsComponent } from './feature-modules/transport/all-stations/all-stations.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -21,6 +24,9 @@ const routes: Routes = [
   { path: 'create-bus', component: CreateBusFormComponent },
   { path: 'create-line', component: CreateLineFormComponent },
   { path: 'create-station', component: CreateStationFormComponent },
+  { path: 'all-buses', component: AllBusesComponent},
+  { path: 'all-lines', component: AllLinesComponent},
+  { path: 'all-stations', component: AllStationsComponent}
 ];
 
 @NgModule({

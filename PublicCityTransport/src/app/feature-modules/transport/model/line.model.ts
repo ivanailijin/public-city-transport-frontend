@@ -1,4 +1,4 @@
-export interface LineRegistration {
+export interface Line {
     id: number;
     name: string;
     lineType: LineType;
