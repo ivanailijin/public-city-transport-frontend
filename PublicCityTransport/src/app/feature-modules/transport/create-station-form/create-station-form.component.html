@@ -1,1 +1,41 @@
-<p>create-station-form works!</p>
+<div class="d-flex justify-content-center align-items-center mt-5 mb-5 flex-column">
+    <h3 class="text-center mb-4" style="color: #4682B4;">Station Creation</h3>
+    <div class="card shadow-lg p-4 custom-width border" style="border-radius: 10px; background-color: #f7f9fc;">
+      <form class="row g-3 needs-validation" [formGroup]="stationRegistrationForm" (ngSubmit)="createStation()" novalidate>
+          <div class="mb-2">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" class="form-control" id="name" formControlName="name" required>
+              <div class="valid-feedback">
+                  Looks good!
+              </div>
+              <div class="invalid-feedback">
+                  Please enter station name.
+              </div>
+          </div>
+          <div class="mb-2">
+            <label for="location" class="form-label">Select Location:</label>
+            <select id="location" class="form-control" (change)="onLocationSelect($event)" formControlName="locationId" required>
+              <option *ngFor="let location of locations" [value]="location.id">
+                {{ location.name }} , {{location.address}}
+              </option>
+            </select>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please select location.
+            </div>
+            <div class="mb-2 mt-5">
+            <label for="location" class="form-label">Confirm location on map:</label>
+            <div class="mt-2" style="margin-left: 7%;">
+                <xp-map id="map-edit" (latitude)="GetLatitude($event)" 
+                (longitude)="GetLongitude($event)" ></xp-map>
+              </div>
+            </div>
+        </div>
+          <div class="col-12 text-center">
+            <button class="btn mt-3" id="createButton" type="submit" style="background-color: #4682B4; color: white; width:75%; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px;">Create</button>
+        </div>
+      </form>
+  </div>
+</div>

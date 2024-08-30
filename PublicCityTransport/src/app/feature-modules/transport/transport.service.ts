@@ -5,6 +5,8 @@ import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
 import { PagedResults } from 'src/app/shared/model/paged-results';
 import { Line } from './model/line.model';
+import { Station } from './model/station.model';
+import { Location } from './model/location.model';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +55,39 @@ export class TransportService {
 
   deleteLine(id: number): Observable<Line> {
     return this.http.delete<Line>(environment.apiHost + 'line/delete/' + id);
+  }
+
+  //STATIONS
+  getAllStations(): Observable<PagedResults<Station>> {
+    return this.http.get<PagedResults<Station>>(environment.apiHost + 'station/getAll');
+  }
+
+  createStation(station: Station): Observable<Station> {
+    return this.http.post<Station>(environment.apiHost + 'station/create', station);
+  }
+
+  updateStation(station: Station): Observable<Station> {
+    return this.http.put<Station>(environment.apiHost + 'station/update/' + station.id, station)
+  }
+
+  deleteStation(id: number): Observable<Station> {
+    return this.http.delete<Station>(environment.apiHost + 'station/delete/' + id);
+  }
+
+  //LOCATIONS
+  getAllLocations(): Observable<PagedResults<Location>> {
+    return this.http.get<PagedResults<Location>>(environment.apiHost + 'location/getAll');
+  }
+
+  createLocation(location: Location): Observable<Location> {
+    return this.http.post<Location>(environment.apiHost + 'location/create', location);
+  }
+
+  updateLocation(location: Location): Observable<Location> {
+    return this.http.put<Location>(environment.apiHost + 'location/update/' + location.id, location)
+  }
+
+  deleteLocation(id: number): Observable<Location> {
+    return this.http.delete<Location>(environment.apiHost + 'location/delete/' + id);
   }
 }

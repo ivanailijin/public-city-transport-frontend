@@ -7,6 +7,8 @@ import { CreateStationFormComponent } from './create-station-form/create-station
 import { AllBusesComponent } from './all-buses/all-buses.component';
 import { AllStationsComponent } from './all-stations/all-stations.component';
 import { AllLinesComponent } from './all-lines/all-lines.component';
+import { MapComponent } from 'src/app/shared/map/map.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -22,7 +24,8 @@ import { AllLinesComponent } from './all-lines/all-lines.component';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class TransportModule { }
