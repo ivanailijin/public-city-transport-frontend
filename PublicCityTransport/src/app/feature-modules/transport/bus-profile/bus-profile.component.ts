@@ -62,6 +62,8 @@ export class BusProfileComponent implements OnInit {
   }
   
   selectedDriverId: number = 0;
+  selectedDriverForDeletionName: string = '';
+  driverIdToDelete: number | undefined;
   drivers: Employee[] = [];
   isSubmitted = false;
 
@@ -184,18 +186,21 @@ export class BusProfileComponent implements OnInit {
     this.isSubmitted = false;
   }
 
-  deleteDriver(driverId: number) {
-    if (confirm('Are you sure you want to delete this driver?')) {
-      this.transportService.removeDriver(driverId, this.busId).subscribe(
+  deleteDriver() {
+      this.transportService.removeDriver(this.driverIdToDelete!, this.busId).subscribe(
         () => {
-          this.bus.employees = this.bus.employees.filter(driver => driver.id !== driverId);
+          this.bus.employees = this.bus.employees.filter(driver => driver.id !== this.driverIdToDelete);
           this.getDrivers()
         },
         (error) => {
           console.error('Error deleting driver:', error);
         }
       );
-    }
+  }
+
+  openDeleteModal(driver: Employee) {
+    this.selectedDriverForDeletionName = driver.name! + ' ' + driver.surname!;
+    this.driverIdToDelete = driver.id; 
   }
   
   toGenderEnum(role: Gender): string {
