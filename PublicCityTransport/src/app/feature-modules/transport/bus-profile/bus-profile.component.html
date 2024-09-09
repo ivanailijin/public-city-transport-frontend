@@ -104,6 +104,30 @@
               </table>
             </div>
         </div>
+        <div *ngIf="selectedNavItem === 'lines'" class="row" style="margin-left:0.5%">
+          <div class="row" style="width: 1010px;">
+            <table class="table border-top-color: 2px solid #396b94;">
+              <thead class="table-header">
+                <tr>
+                  <th scope="col" class="index-column">•</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Length (km)</th>
+                  <th scope="col">Time (min)</th>
+                </tr>
+              </thead>
+              <tbody class="table-body table-group-divider">
+                <tr *ngFor="let line of lines; let i = index">
+                  <th scope="row" class="index-column">{{ i + 1 }}</th>
+                  <td>{{ line.name }}</td>
+                  <td>{{ toLineTypeString(line.lineType)}}</td>
+                  <td>{{ line.length }}</td>
+                  <td>{{ line.time}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
     </div>
 </div>
 

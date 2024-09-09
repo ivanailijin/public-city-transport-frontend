@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { StakeholdersService } from '../../stakeholders/stakeholders.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Modal } from 'bootstrap';
+import { Line, LineType } from '../model/line.model';
 
 @Component({
   selector: 'app-bus-profile',
@@ -65,6 +66,7 @@ export class BusProfileComponent implements OnInit {
   selectedDriverForDeletionName: string = '';
   driverIdToDelete: number | undefined;
   drivers: Employee[] = [];
+  lines: Line[] = [];
   isSubmitted = false;
   arrivalDate: Date = new Date();
 
@@ -113,6 +115,7 @@ export class BusProfileComponent implements OnInit {
       this.bus = result;
       console.log(this.bus)
       this.getDrivers();
+      this.getBusLines();
       this.busForm.patchValue({
         garageNumber: this.bus.garageNumber,
         licencePlate: this.bus.licencePlate,
@@ -122,6 +125,12 @@ export class BusProfileComponent implements OnInit {
       });
     })
   } 
+
+  getBusLines(){
+    this.transportService.getByBusId(this.bus.id).subscribe((result: Line[]) => {
+      this.lines = result;
+    })
+  }
 
   getEmployee(): void {
     this.authService.user$.subscribe(user => {
@@ -158,6 +167,7 @@ export class BusProfileComponent implements OnInit {
     this.selectedDriverId = Number(target.value);
   }
 
+  //for dropdown - selecting new drivers
   getDrivers(){
     this.stakeholdersService.getDrivers().subscribe((result: Employee[]) => {
       this.drivers = result.filter(driver => 
@@ -227,6 +237,17 @@ export class BusProfileComponent implements OnInit {
         return 'Female';
       default:
         return 'Male';
+    }
+  }
+
+  toLineTypeString(type: LineType): string {
+    switch (type) {
+      case LineType.city:
+        return 'City';
+      case LineType.suburban:
+        return 'Suburban';
+      default:
+        return 'City';
     }
   }
 

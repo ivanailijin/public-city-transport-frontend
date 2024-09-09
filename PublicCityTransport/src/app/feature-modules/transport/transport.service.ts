@@ -61,6 +61,10 @@ export class TransportService {
     return this.http.delete<Line>(environment.apiHost + 'line/delete/' + id);
   }
 
+  getByBusId(id: number): Observable<Line[]> {
+    return this.http.get<Line[]>(environment.apiHost + 'line/getByBusId/' + id);
+  }
+
   //STATIONS
   getAllStations(): Observable<PagedResults<Station>> {
     return this.http.get<PagedResults<Station>>(environment.apiHost + 'station/getAll');
