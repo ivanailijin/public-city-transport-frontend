@@ -10,7 +10,8 @@
           <h1 class="mt-3" style="color: #396b94; width: 100%; max-width: 520px; margin-left:28%">{{bus.licencePlate}}</h1>
         </div>
         <div class="col-1" style="margin-left:39.5%">
-          <button class="btn btn-light mt-4" *ngIf="user && user.role == 1" style="border-color: #396b94; color: #396b94;">
+          <button class="btn btn-light mt-4" *ngIf="user && user.role == 1" style="border-color: #396b94; color: #396b94;"
+          data-bs-toggle="modal" data-bs-target="#editBusModal">
             <span class="me-2">Edit</span>
             <i class="bi bi-pencil-fill" style="color: #396b94;"></i>
           </button>
@@ -158,5 +159,79 @@
         style="background-color: #4682B4; color: white; width:55%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;">Delete</button>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editBusModal" tabindex="-1" aria-labelledby="editBusModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h3 class="modal-title" id="editBusModalLabel" style="color: #396b94; width: 100%; max-width: 520px;">Edit bus</h3>
+              <button type="button" class="btn-close" #closeEditButton data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form [formGroup]="busForm" id ="editBusForm" class="needs-validation"  novalidate>
+                <div class="mb-2">
+                  <label for="garageNumber" class="form-label">Garage Number</label>
+                  <input type="text" [(ngModel)]="bus.garageNumber" class="form-control" id="garageNumber" formControlName="garageNumber" required>
+                  <div class="valid-feedback">
+                      Looks good!
+                  </div>
+                  <div class="invalid-feedback">
+                      Please enter garage number.
+                  </div>
+              </div>
+              <div class="mb-2">
+                  <label for="licencePlate" class="form-label">Licence Plate</label>
+                  <input type="text" [(ngModel)]="bus.licencePlate" class="form-control" id="licencePlate" formControlName="licencePlate" required>
+                  <div class="valid-feedback">
+                      Looks good!
+                  </div>
+                  <div class="invalid-feedback">
+                      Please enter bus licence plate.
+                  </div>
+              </div>
+              <div class="mb-2">
+                  <label for="busBrand" class="form-label">Bus Brand</label>
+                  <div class="input-group has-validation">
+                      <input type="text" [(ngModel)]="bus.busBrand" class="form-control" id="busBrand" formControlName="busBrand" required>
+                      <div class="valid-feedback">
+                          Looks good!
+                      </div>
+                      <div class="invalid-feedback">
+                          Please enter bus brand.
+                      </div>
+                  </div>
+              </div>
+              <div class="mb-2">
+                  <label for="yearOfProduction" class="form-label">Year Of Production</label>
+                  <input type="text" [(ngModel)]="bus.yearOfProduction" class="form-control" formControlName="yearOfProduction" pattern="[0-9]+" maxlength="4" required>
+                  <div class="valid-feedback">
+                      Looks good!
+                  </div>
+                  <div class="invalid-feedback">
+                      Year Of Production must contain only numbers!
+                  </div>
+              </div>
+              <div class="mb-2">
+                <label for="arrivalDate" class="form-label">Arrival Date</label>
+                <input type="date" class="form-control" id="arrivalDate" formControlName="arrivalDate" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please provide a valid bus arrival date.
+                </div>
+            </div>
+                
+                  <div class="modal-footer me-4 justify-content-center">
+                    <button type="submit" id="closeEditModal" class="btn" style="background-color: #4682B4; color: white; width:55%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;" 
+                     (click)="validateEditForm($event)">
+                        Submit
+                    </button>
+                  </div>
+              </form>
+          </div>
+      </div>
   </div>
 </div>

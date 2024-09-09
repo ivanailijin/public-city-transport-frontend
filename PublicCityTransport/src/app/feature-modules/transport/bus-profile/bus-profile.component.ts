@@ -7,7 +7,6 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { StakeholdersService } from '../../stakeholders/stakeholders.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Modal } from 'bootstrap';
-import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-bus-profile',
@@ -19,6 +18,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 export class BusProfileComponent implements OnInit {
 
   @ViewChild('closebutton') closebutton!: ElementRef | undefined;
+  @ViewChild('closeEditButton') closeEditButton!: ElementRef | undefined;
 
   constructor(private transportService: TransportService, private authService: AuthService, private route: ActivatedRoute,
      private router: Router, private stakeholdersService: StakeholdersService, private renderer: Renderer2) {}
@@ -66,6 +66,7 @@ export class BusProfileComponent implements OnInit {
   driverIdToDelete: number | undefined;
   drivers: Employee[] = [];
   isSubmitted = false;
+  arrivalDate: Date = new Date();
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -99,13 +100,28 @@ export class BusProfileComponent implements OnInit {
     driverId: new FormControl('', [Validators.required])
     });
 
+  busForm = new FormGroup({
+    garageNumber: new FormControl(this.bus.garageNumber, [Validators.required]),
+    licencePlate: new FormControl('', [Validators.required]),
+    busBrand: new FormControl('', [Validators.required]),
+    yearOfProduction: new FormControl('', [Validators.required, Validators.pattern('[0-9]+')]),
+    arrivalDate: new FormControl('', [Validators.required]),
+    });
+
   getBusWithRelations(id: number): void {
     this.transportService.getWithRelations(id).subscribe((result: any) => {
       this.bus = result;
       console.log(this.bus)
       this.getDrivers();
+      this.busForm.patchValue({
+        garageNumber: this.bus.garageNumber,
+        licencePlate: this.bus.licencePlate,
+        busBrand: this.bus.busBrand,
+        yearOfProduction: this.bus.yearOfProduction,
+        arrivalDate: this.formatDate(this.bus.arrivalDate) 
+      });
     })
-  }
+  } 
 
   getEmployee(): void {
     this.authService.user$.subscribe(user => {
@@ -212,6 +228,50 @@ export class BusProfileComponent implements OnInit {
       default:
         return 'Male';
     }
+  }
+
+  validateEditForm(event: Event) {
+    event.preventDefault(); 
+  
+    this.isSubmitted = true; 
+    const htmlForm = document.querySelector('#editBusForm');
+    this.renderer.addClass(htmlForm, 'was-validated');
+   
+    if (this.busForm.valid) {
+      const arrivalDateValue = this.busForm.value.arrivalDate;
+      const arrivalDate = arrivalDateValue ? new Date(arrivalDateValue) : new Date();
+      this.bus.arrivalDate = arrivalDate;
+        this.updateBus(); 
+        if (this.closeEditButton) {
+          this.closeEditButton.nativeElement.click();
+        }
+        this.resetEditForm();
+    } else {
+        this.busForm.markAllAsTouched(); 
+    }
+  }
+
+  updateBus() {
+    this.transportService.updateBus(this.bus).subscribe({
+      next: () => { }
+    })
+  }
+
+  resetEditForm() {
+    const htmlForm = document.querySelector('#editBusForm');
+    if (htmlForm) {
+      htmlForm.classList.remove('was-validated');
+    }
+    this.driverForm.reset();
+    this.isSubmitted = false;
+  }
+
+  formatDate(date: Date): string {
+    const d = new Date(date);
+    const month = ('0' + (d.getMonth() + 1)).slice(-2);
+    const day = ('0' + d.getDate()).slice(-2);
+    const year = d.getFullYear();
+    return `${year}-${month}-${day}`;
   }
 }
 
