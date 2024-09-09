@@ -1,1 +1,243 @@
-<p>line-profile works!</p>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <img src="assets/pictures/map.PNG" class="img-fluid" alt="Bus Image" 
+                 style="height: 300px; width:1000px; object-fit: cover; opacity: 0.7;">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5">
+          <h1 class="mt-3" style="color: #396b94; width: 100%; max-width: 520px; margin-left:28%">{{line.name}}</h1>
+        </div>
+        <div class="col-1" style="margin-left:39.5%">
+          <button class="btn btn-light mt-4" *ngIf="user && user.role == 1" style="border-color: #396b94; color: #396b94;"
+          data-bs-toggle="modal" data-bs-target="#editLineModal">
+            <span class="me-2">Edit</span>
+            <i class="bi bi-pencil-fill" style="color: #396b94;"></i>
+          </button>
+        </div>
+    </div>
+    <div class="row mt-4" style="margin-left:11.5%">
+        <ul class="nav nav-underline">
+            <li class="nav-item">
+              <a class="nav-link active" [class.active]="selectedNavItem === 'info'" (click)="showInfo()" style="color: #396b94; cursor: pointer;">Line Info</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="selectedNavItem === 'buses'" (click)="showBuses()" style="color: #396b94; cursor: pointer;">Buses</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="selectedNavItem === 'directions'" (click)="showDirections()" style="color: #396b94; cursor: pointer;">Directions & Departments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="selectedNavItem === 'stations'" (click)="showStations()" style="color: #396b94; cursor: pointer;">Stations</a>
+              </li>
+          </ul>
+    </div>
+    <div class="content-container mt-4" style="margin-left:11.5%">
+        <div *ngIf="selectedNavItem === 'info'">
+            <div class="row">
+                <div class="col-12 mb-2">
+                    <div class="card mb-3" style="border-color: #4682B4; max-width: 240px;">
+                        <div class="card-body">
+                            <div class="text-body-secondary fw-normal fs-7" *ngIf="selectedNavItem === 'info'" style="color: #396b94;">
+                                <span class="fw-bold">LineType • </span> {{ lineTypeToString(line.lineType) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3" style="border-color: #4682B4; max-width: 270px;">
+                        <div class="card-body">
+                            <div class="text-body-secondary fw-normal fs-7" *ngIf="selectedNavItem === 'info'">
+                                <span class="fw-bold">Path Length • </span> {{line.length}} km
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="border-color: #4682B4; max-width: 300px;">
+                        <div class="card-body">
+                            <div class="text-body-secondary fw-normal fs-7" *ngIf="selectedNavItem === 'info'">
+                                <span class="fw-bold">Duration in one direction • </span> {{line.time}} min
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="selectedNavItem === 'buses'" class="row" style="margin-left:0.5%">
+            <div class="row">
+              <div class="col-12 d-flex mb-3" style="margin-left:77%">
+                <button type="button" class="btn" style="background-color: #4682B4; color: white; width:10%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;" 
+                        data-bs-toggle="modal" data-bs-target="#addBusModal"
+                         (click)="resetForm()">
+                    Add Bus
+                </button>
+              </div>
+            </div>
+            <div class="row" style="width: 1010px;">
+              <table class="table border-top-color: 2px solid #396b94;">
+                <thead class="table-header">
+                  <tr>
+                    <th scope="col" class="index-column">•</th>
+                    <th scope="col">Garage Number</th>
+                    <th scope="col">Licence Plate</th>
+                    <th scope="col">Bus Brand</th>
+                    <th scope="col">Year Of Production</th>
+                    <th scope="col">Arrival Date</th>
+                  </tr>
+                </thead>
+                <tbody class="table-body table-group-divider">
+                  <tr *ngFor="let bus of line.buses; let i = index">
+                    <th scope="row" class="index-column">{{ i + 1 }}</th>
+                    <td>{{ bus.garageNumber }}</td>
+                    <td>{{ bus.licencePlate }}</td>
+                    <td>{{ bus.busBrand}}</td>
+                    <td>{{ bus.yearOfProduction}}</td>
+                    <td>{{ bus.arrivalDate | date: 'mediumDate' }}</td>
+                    <td>
+                      <button class="btn btn-light btn-outline-secondary"     
+                      (click)="openBusDeleteModal(bus)"
+                      data-bs-toggle="modal" 
+                      data-bs-target="#deleteBusConfirmationModal"><i class="bi bi-trash3"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+        <div *ngIf="selectedNavItem === 'directions'" class="row" style="margin-left:0.5%">
+
+      </div>
+      <div *ngIf="selectedNavItem === 'stations'" class="row" style="margin-left:0.5%">
+
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addBusModal" tabindex="-1" aria-labelledby="addBusModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="addBusModalLabel" style="color: #396b94; width: 100%; max-width: 520px;">Add new bus</h3>
+                <button type="button" class="btn-close" #closebutton data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="busForm" class="needs-validation"  novalidate>
+                  <div class="mb-3 position-relative">
+                    <label for="bus" class="form-label">Select Bus:</label>
+                    <select id="bus" class="form-control"
+                            (change)="onBusSelect($event)" formControlName="busId"
+                             required>
+                      <option value="" disabled selected>Select a bus</option>
+                      <option *ngFor="let bus of busesForSelect" [value]="bus.id">
+                        {{ bus.garageNumber }}, {{ bus.licencePlate }}
+                      </option>
+                    </select>
+  
+                    <div class="invalid-feedback">
+                     Please select a bus.
+                    </div>
+                  </div>
+                  
+                    <div class="modal-footer me-4 justify-content-center">
+                      <button type="submit" id="closeModal" class="btn" style="background-color: #4682B4; color: white; width:55%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;" 
+                       (click)="validateBusForm($event)">
+                          Submit
+                      </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deleteBusConfirmationModal" tabindex="-1" aria-labelledby="deleteBusConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteBusConfirmationModalLabel" style="color: #396b94; width: 100%; max-width: 520px;">Confirm delete</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to remove bus <strong>{{ selectedBusForDeletionName }}</strong> from line <strong>{{ line.name }}</strong>?</p>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-primary" (click)="deleteBus()" data-bs-dismiss="modal"
+          style="background-color: #4682B4; color: white; width:55%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="editLineModal" tabindex="-1" aria-labelledby="editLineModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="editLineModalLabel" style="color: #396b94; width: 100%; max-width: 520px;">Edit line</h3>
+                <button type="button" class="btn-close" #closeEditButton data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="lineForm" id ="editLineForm" class="needs-validation"  novalidate>
+                    <div class="mb-2">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" [(ngModel)]="line.name" class="form-control" id="name" pattern="[0-9]+" maxlength="2" formControlName="name" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter line name.
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                      <label class="form-label" for="lineType">Type</label>
+                      <div class="d-flex ms-3">
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input mt-2" type="radio" name="lineType" id="city" value="city" formControlName="lineType" required>
+                              <label class="form-check-label border p-2 rounded me-2" for="city">
+                              City
+                              </label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input mt-2" type="radio" name="lineType" id="suburban" value="suburban" formControlName="lineType" required>
+                              <label class="form-check-label border p-2 rounded me-2" for="suburban">
+                              Suburban
+                              </label>
+                          </div>
+                      </div>
+                      <div class="valid-feedback">
+                          Looks good!
+                      </div>
+                      <div class="invalid-feedback">
+                          Please select line type.
+                      </div>
+                  </div>
+                    <div class="mb-2">
+                        <label for="length" class="form-label">Length</label>
+                        <div class="input-group has-validation">
+                            <input type="text" [(ngModel)]="line.length" class="form-control" id="length" pattern="^\d+(\.\d{1,2})?$" maxlength="5" formControlName="length" placeholder="3 (km)" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter line length (km). Example: 2, 2.5, 2.55, 20.55
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="time" class="form-label">Time</label>
+                        <input type="number" [(ngModel)]="line.time" class="form-control" formControlName="time" pattern="[0-9]+" maxlength="2" placeholder="20 (min)" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter line time length (min).
+                        </div>
+                    </div>
+                    <div class="modal-footer me-4 justify-content-center">
+                      <button type="submit" id="closeEditModal" class="btn" style="background-color: #4682B4; color: white; width:55%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;" 
+                       (click)="validateEditForm($event)">
+                          Submit
+                      </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>

@@ -4,7 +4,7 @@ import { Bus } from './model/bus.model';
 import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
 import { PagedResults } from 'src/app/shared/model/paged-results';
-import { Line } from './model/line.model';
+import { Line, LineOut } from './model/line.model';
 import { Station } from './model/station.model';
 import { Location } from './model/location.model';
 
@@ -63,6 +63,26 @@ export class TransportService {
 
   getByBusId(id: number): Observable<Line[]> {
     return this.http.get<Line[]>(environment.apiHost + 'line/getByBusId/' + id);
+  }
+
+  addBus(busId: number, lineId: number): Observable<LineOut> {
+    return this.http.get<LineOut>(`${environment.apiHost}line/addBus/${busId}/${lineId}`);
+  }
+
+  removeBus(busId: number, lineId: number): Observable<LineOut> {
+    return this.http.get<LineOut>(`${environment.apiHost}line/removeBus/${busId}/${lineId}`);
+  }
+
+  addStation(stationId: number, lineId: number): Observable<LineOut> {
+    return this.http.get<LineOut>(`${environment.apiHost}line/addStation/${stationId}/${lineId}`);
+  }
+
+  removeStation(stationId: number, lineId: number): Observable<LineOut> {
+    return this.http.get<LineOut>(`${environment.apiHost}line/removeStation/${stationId}/${lineId}`);
+  }
+
+  getLineWithRelations(lineId: number): Observable<LineOut> {
+    return this.http.get<LineOut>(environment.apiHost + 'line/getWithRelations/' + lineId);
   }
 
   //STATIONS
