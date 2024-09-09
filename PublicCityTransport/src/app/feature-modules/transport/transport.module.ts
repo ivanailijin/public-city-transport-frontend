@@ -7,10 +7,10 @@ import { CreateStationFormComponent } from './create-station-form/create-station
 import { AllBusesComponent } from './all-buses/all-buses.component';
 import { AllStationsComponent } from './all-stations/all-stations.component';
 import { AllLinesComponent } from './all-lines/all-lines.component';
-import { MapComponent } from 'src/app/shared/map/map.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-
-
+import { BusProfileComponent } from './bus-profile/bus-profile.component';
+import { LineProfileComponent } from './line-profile/line-profile.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CreateStationFormComponent,
     AllBusesComponent,
     AllStationsComponent,
-    AllLinesComponent
+    AllLinesComponent,
+    BusProfileComponent,
+    LineProfileComponent
   ],
   imports: [
     CommonModule,

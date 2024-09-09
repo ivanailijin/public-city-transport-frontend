@@ -27,6 +27,10 @@ export class StakeholdersService {
     return this.http.put<Employee>(environment.apiHost + 'employee/update-profile', user);
   }
 
+  getDrivers(): Observable<Employee[]> {
+    return this.http.get<Employee[]>(environment.apiHost + 'employee/get-drivers');
+  }
+
   getCustomer(id: number): Observable<Customer> {
     return this.http.get<Customer>(environment.apiHost + 'customer/get-profile/' + id);
   }

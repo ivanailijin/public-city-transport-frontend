@@ -40,6 +40,10 @@ export class TransportService {
     return this.http.get<Bus>(`${environment.apiHost}bus/removeDriver/${driverId}/${busId}`);
   }
 
+  getWithRelations(busId: number): Observable<Bus> {
+    return this.http.get<Bus>(environment.apiHost + 'bus/getWithRelations/' + busId);
+  }
+
 //LINES
   getAllLines(): Observable<PagedResults<Line>> {
     return this.http.get<PagedResults<Line>>(environment.apiHost + 'line/getAll');

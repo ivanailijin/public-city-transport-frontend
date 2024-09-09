@@ -13,6 +13,7 @@ import { CreateStationFormComponent } from './feature-modules/transport/create-s
 import { AllBusesComponent } from './feature-modules/transport/all-buses/all-buses.component';
 import { AllLinesComponent } from './feature-modules/transport/all-lines/all-lines.component';
 import { AllStationsComponent } from './feature-modules/transport/all-stations/all-stations.component';
+import { BusProfileComponent } from './feature-modules/transport/bus-profile/bus-profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -26,7 +27,8 @@ const routes: Routes = [
   { path: 'create-station', component: CreateStationFormComponent },
   { path: 'all-buses', component: AllBusesComponent},
   { path: 'all-lines', component: AllLinesComponent},
-  { path: 'all-stations', component: AllStationsComponent}
+  { path: 'all-stations', component: AllStationsComponent},
+  { path: 'bus-profile/:id', component: BusProfileComponent }
 ];
 
 @NgModule({
