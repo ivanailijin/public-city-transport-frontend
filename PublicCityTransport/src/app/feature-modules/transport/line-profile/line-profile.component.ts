@@ -70,6 +70,8 @@ export class LineProfileComponent implements OnInit {
   isSubmitted = false;
   departures: Departure[] = [];
   days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  selectedDirectionForDeletionName: string = '';
+  directionIdToDelete: number | undefined;
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -316,32 +318,20 @@ openBusDeleteModal(bus: Bus) {
     }
   }
 
-  // Form group for departures
-getDepartureFormGroup(directionId: number): FormGroup {
-  return new FormGroup({
-    day: new FormControl(['', Validators.required]),
-    time: new FormControl(['', Validators.required]),
-    directionId: new FormControl([directionId]),
-    lineId: new FormControl(this.line.id)
-  });
-}
-
-addDeparture(directionId: number) {
-  const departureForm = this.getDepartureFormGroup(directionId);
-  const htmlForm = document.querySelector('#addDepartureForm');
-  this.renderer.addClass(htmlForm, 'was-validated');
-
-  if (departureForm.valid) {
-    const departure: Departure = departureForm.value;
-    // Perform actions like saving the departure to a list or database
-    this.transportService.createDeparture(departure).subscribe({
-      next: () => {
-        this.getLineWithRelations(this.lineId);
-      }
-    });
-  } else {
-    departureForm.markAllAsTouched();
+  openDirectionDeleteModal(direction: Direction) {
+    this.selectedDirectionForDeletionName = direction.name!;
+    this.directionIdToDelete = direction.id; 
   }
+
+  deleteDirection() {
+    this.transportService.deleteDirection(this.directionIdToDelete!, this.lineId).subscribe(
+      () => {
+        this.line.directions = this.line.directions.filter(direction => direction.id !== this.directionIdToDelete);
+      },
+      (error) => {
+        console.error('Error deleting direction:', error);
+      }
+    );
 }
 
 getDepartures(directionId: number): Departure[] {
