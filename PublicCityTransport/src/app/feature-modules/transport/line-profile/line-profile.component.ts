@@ -21,6 +21,7 @@ export class LineProfileComponent implements OnInit {
   @ViewChild('closebutton') closebutton!: ElementRef | undefined;
   @ViewChild('closeEditButton') closeEditButton!: ElementRef | undefined;
   @ViewChild('closeDirectionButton') closeDirectionButton!: ElementRef | undefined;
+  @ViewChild('closeDepartureButton') closeDepartureButton!: ElementRef | undefined;
 
   constructor(private transportService: TransportService, private authService: AuthService, private route: ActivatedRoute,
     private router: Router, private stakeholdersService: StakeholdersService, private renderer: Renderer2){}
@@ -69,9 +70,9 @@ export class LineProfileComponent implements OnInit {
   busesForSelect: Bus[] = [];
   isSubmitted = false;
   departures: Departure[] = [];
-  days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-  selectedDirectionForDeletionName: string = '';
-  directionIdToDelete: number | undefined;
+  days: string[] = ['Workday', 'Saturday', 'Sunday'];
+  selectedDirectionName: string = '';
+  selectedDirectionId: number | undefined;
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -101,21 +102,27 @@ export class LineProfileComponent implements OnInit {
     })();
   }
 
-  busForm = new FormGroup({
-    busId: new FormControl('', [Validators.required])
-    });
+busForm = new FormGroup({
+  busId: new FormControl('', [Validators.required])
+  });
 
-  lineForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    lineType: new FormControl('', [Validators.required]),
-    length: new FormControl(0, [Validators.required]),
-    time: new FormControl(0, [Validators.required, Validators.pattern('[0-9]+')]),
-    });
+lineForm = new FormGroup({
+  name: new FormControl('', [Validators.required]),
+  lineType: new FormControl('', [Validators.required]),
+  length: new FormControl(0, [Validators.required]),
+  time: new FormControl(0, [Validators.required, Validators.pattern('[0-9]+')]),
+  });
 
-  directionForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    firstStation: new FormControl('', [Validators.required]),
-    });
+directionForm = new FormGroup({
+  name: new FormControl('', [Validators.required]),
+  firstStation: new FormControl('', [Validators.required]),
+  });
+
+departureForm = new FormGroup({
+  day: new FormControl('', [Validators.required]),
+  time: new FormControl('', [Validators.required]),
+  });
+  
 
     showInfo() {
       this.selectedNavItem = 'info';
@@ -297,6 +304,7 @@ openBusDeleteModal(bus: Bus) {
     if (htmlForm) {
       htmlForm.classList.remove('was-validated');
     }
+    this.directionForm.reset();
     this.isSubmitted = false;
   }
 
@@ -318,15 +326,15 @@ openBusDeleteModal(bus: Bus) {
     }
   }
 
-  openDirectionDeleteModal(direction: Direction) {
-    this.selectedDirectionForDeletionName = direction.name!;
-    this.directionIdToDelete = direction.id; 
+  setSelectedDirection(direction: Direction) {
+    this.selectedDirectionName = direction.name!;
+    this.selectedDirectionId = direction.id; 
   }
 
   deleteDirection() {
-    this.transportService.deleteDirection(this.directionIdToDelete!, this.lineId).subscribe(
+    this.transportService.deleteDirection(this.selectedDirectionId!, this.lineId).subscribe(
       () => {
-        this.line.directions = this.line.directions.filter(direction => direction.id !== this.directionIdToDelete);
+        this.line.directions = this.line.directions.filter(direction => direction.id !== this.selectedDirectionId);
       },
       (error) => {
         console.error('Error deleting direction:', error);
@@ -342,6 +350,46 @@ getDepartures(directionId: number): Departure[] {
     }
   );
   return this.departures;
+}
+
+createDeparture() {
+  const departure: Departure = {
+    id: 0,
+    day: this.departureForm.value.day || "",
+    time: this.departureForm.value.time + ":00"|| "",
+    directionId: this.selectedDirectionId!,
+    lineId: this.lineId,
+  };
+  this.transportService.createDeparture(departure).subscribe({
+    next: () => {
+      this.getDepartures(this.selectedDirectionId!);
+    }
+  });
+}
+
+resetDepartureForm() {
+  const htmlForm = document.querySelector('#addDepartureForm');
+  if (htmlForm) {
+    htmlForm.classList.remove('was-validated');
+  }
+}
+
+validateDepartureForm(event: Event) {
+  event.preventDefault(); 
+
+  this.isSubmitted = true; 
+  const htmlForm = document.querySelector('#addDepartureForm');
+  this.renderer.addClass(htmlForm, 'was-validated');
+ 
+  if (this.departureForm.valid) {
+      this.createDeparture(); 
+      if (this.closeDepartureButton) {
+        this.closeDepartureButton.nativeElement.click();
+      }
+      this.resetDepartureForm();
+  } else {
+      this.busForm.markAllAsTouched(); 
+  }
 }
 
 public lineTypeToString(line: LineType): string {
