@@ -10,6 +10,7 @@ export interface Direction {
 
 export interface DirectionOut {
     id: number;
+    name: string;
     firstStation: string;
     lineId: number;
     line: Line;

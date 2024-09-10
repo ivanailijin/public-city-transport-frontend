@@ -1,0 +1,42 @@
+<div class="row">
+    <div>
+        <p class="mt-3 fw-semibold secondary" style="color: #49535c; text-decoration: underline; text-underline-offset: 8px;">
+        Work Day
+        </p>
+        <div class="list-group">
+        <div *ngFor="let departure of workdayDepartures" class="list-group-item"  style="background-color: #ebf7ec;">
+            {{ departure.time }}
+        </div>
+        </div>
+        <p class="mt-2 fw-semibold secondary" style="color: #ac1212; text-underline-offset: 8px;" *ngIf="workdayDepartures.length == 0">
+            No departures are scheduled for Work Day.
+        </p>
+    </div>
+    <div>
+        <p class="mt-3 fw-semibold" style="color: #49535c; text-decoration: underline; text-underline-offset: 8px;">
+            Saturday
+        </p>
+        <div class="list-group">
+            <div *ngFor="let departure of saturdayDepartures" class="list-group-item" style="background-color: #f7f2eb;">
+            {{ departure.time }}
+            </div>
+        </div>
+        <p class="mt-2 fw-semibold secondary" style="color: #ac1212; text-underline-offset: 8px;" *ngIf="saturdayDepartures.length == 0">
+            No departures are scheduled for Saturday.
+        </p>
+    </div>
+    <div class="mb-5">
+        <p class="mt-3 fw-semibold secondary" style="color: #49535c; text-decoration: underline; text-underline-offset: 8px;">
+            Sunday
+        </p>
+        <div class="list-group">
+            <div *ngFor="let departure of sundayDepartures" class="list-group-item" style="background-color: #efebf7;">
+            {{ departure.time }}
+            </div>
+        </div>
+        <p class="mt-2 fw-semibold secondary" style="color: #ac1212; text-underline-offset: 8px;" *ngIf="sundayDepartures.length == 0">
+            No departures are scheduled for Sunday.
+        </p>
+    </div>
+</div>
+  

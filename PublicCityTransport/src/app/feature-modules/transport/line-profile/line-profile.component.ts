@@ -362,7 +362,7 @@ createDeparture() {
   };
   this.transportService.createDeparture(departure).subscribe({
     next: () => {
-      this.getDepartures(this.selectedDirectionId!);
+      this.getLineWithRelations(this.lineId);
     }
   });
 }
@@ -390,6 +390,20 @@ validateDepartureForm(event: Event) {
   } else {
       this.busForm.markAllAsTouched(); 
   }
+}
+
+getWorkdayDepartures(directionId: number): Departure[] {
+  const departures = this.getDepartures(directionId);
+  
+  // Filtriranje departura za 'Workday'
+  const workdayDepartures = departures.filter(dep => dep.day === 'Workday');
+
+  // Sortiranje po vremenu
+  const sortedDepartures = workdayDepartures.sort((a, b) => {
+    return new Date(`1970-01-01T${a.time}Z`).getTime() - new Date(`1970-01-01T${b.time}Z`).getTime();
+  });
+
+  return sortedDepartures;
 }
 
 public lineTypeToString(line: LineType): string {

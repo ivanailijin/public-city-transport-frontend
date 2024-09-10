@@ -1,5 +1,5 @@
 import { Bus } from "./bus.model";
-import { Direction } from "./direction.model";
+import { DirectionOut } from "./direction.model";
 import { Station } from "./station.model";
 
 export interface Line {
@@ -17,7 +17,7 @@ export interface LineOut {
     length: number;
     time: number;
     buses: Bus[];
-    directions: Direction[];
+    directions: DirectionOut[];
     stations: Station[];
 }
 
