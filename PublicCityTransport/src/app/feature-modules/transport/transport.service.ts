@@ -7,6 +7,8 @@ import { PagedResults } from 'src/app/shared/model/paged-results';
 import { Line, LineOut } from './model/line.model';
 import { Station } from './model/station.model';
 import { Location } from './model/location.model';
+import { Direction, DirectionOut } from './model/direction.model';
+import { Departure } from './model/departure.model';
 
 @Injectable({
   providedIn: 'root'
@@ -117,5 +119,43 @@ export class TransportService {
 
   deleteLocation(id: number): Observable<Location> {
     return this.http.delete<Location>(environment.apiHost + 'location/delete/' + id);
+  }
+
+  //DIRECTIONS
+  getDirection(directionId: number, lineId: number): Observable<Direction> {
+    return this.http.get<Direction>(environment.apiHost + 'direction/get/' + directionId + '/' + lineId);
+  }
+
+  createDirection(direction: Direction): Observable<Direction> {
+    return this.http.post<Direction>(environment.apiHost + 'direction/create', direction);
+  }
+
+  updateDirection(direction: Direction): Observable<Direction> {
+    return this.http.put<Direction>(environment.apiHost + 'direction/update/' + direction.id, direction)
+  }
+
+  deleteDirection(directionId: number, lineId: number): Observable<Direction> {
+    return this.http.delete<Direction>(`${environment.apiHost}direction/delete/${directionId}/${lineId}`);
+  }
+
+  getDirectionWithRelations(directionId: number): Observable<DirectionOut> {
+    return this.http.get<DirectionOut>(environment.apiHost + 'direction/getWithRelations/' + directionId);
+  }
+
+  //DEPARTURES
+  getAllDepartures(): Observable<PagedResults<Departure>> {
+    return this.http.get<PagedResults<Departure>>(environment.apiHost + 'departure/getAll');
+  }
+
+  createDeparture(departure: Departure): Observable<Departure> {
+    return this.http.post<Departure>(environment.apiHost + 'departure/create', departure);
+  }
+
+  updateDeparture(departure: Departure): Observable<Departure> {
+    return this.http.put<Departure>(environment.apiHost + 'departure/update/' + departure.id, departure)
+  }
+
+  deleteDeparture(id: number): Observable<Departure> {
+    return this.http.delete<Departure>(environment.apiHost + 'departure/delete/' + id);
   }
 }

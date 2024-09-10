@@ -102,8 +102,61 @@
               </table>
             </div>
         </div>
-        <div *ngIf="selectedNavItem === 'directions'" class="row" style="margin-left:0.5%">
-
+        <div *ngIf="selectedNavItem === 'directions'" class="row">
+            <div class="row">
+                <div class="col-12 d-flex mb-3" style="margin-left:77%">
+                  <button *ngIf="line.directions.length < 2" type="button" class="btn" style="background-color: #4682B4; color: white; width:10%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;" 
+                          data-bs-toggle="modal" data-bs-target="#addDirectionModal"
+                           (click)="resetDirectionForm()">
+                      Add Direction
+                  </button>
+                </div>
+              </div>
+              <div class="row" *ngFor="let direction of line.directions">
+                <div class="col-md-6">
+                  <div class="card mt-3">
+                    <div class="card-body">
+                      <h5 class="card-title" style="color: #396b94;">
+                        {{direction.name}}
+                      </h5>
+                      <h6 class="card-subtitle mb-2 text-muted">First Station - {{direction.firstStation}}</h6>
+                      
+                      <!-- Forma za unos polazaka -->
+                      <form [formGroup]="getDepartureFormGroup(direction.id)" id="addDepartureForm" novalidate>
+                        <div class="mb-3">
+                          <label for="day" class="form-label">Day</label>
+                          <select class="form-select" formControlName="day" required>
+                            <option *ngFor="let day of days" [value]="day">{{ day }}</option>
+                          </select>
+                          <div class="invalid-feedback">
+                            Please select a valid day.
+                          </div>
+                        </div>
+              
+                        <div class="mb-3">
+                          <label for="time" class="form-label">Time</label>
+                          <input type="time" class="form-control" formControlName="time" required>
+                          <div class="invalid-feedback">
+                            Please enter a valid time.
+                          </div>
+                        </div>
+              
+                        <button type="button" class="btn btn-success" (click)="addDeparture(direction.id)">
+                          Add Departure
+                        </button>
+                      </form>
+              
+                      <!-- Prikaz postojećih polazaka -->
+                      <ul class="list-group mt-3">
+                        <li class="list-group-item" *ngFor="let departure of getDepartures(direction.id)">
+                          {{ departure.day }} - {{ departure.time | date: 'shortTime' }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
       </div>
       <div *ngIf="selectedNavItem === 'stations'" class="row" style="margin-left:0.5%">
 
@@ -233,6 +286,84 @@
                     <div class="modal-footer me-4 justify-content-center">
                       <button type="submit" id="closeEditModal" class="btn" style="background-color: #4682B4; color: white; width:55%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;" 
                        (click)="validateEditForm($event)">
+                          Submit
+                      </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addDirectionModal" tabindex="-1" aria-labelledby="addDirectionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="addDirectionModalLabel" style="color: #396b94; width: 100%; max-width: 520px;">Add new direction</h3>
+                <button type="button" class="btn-close" #closeDirectionButton data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="directionForm" id ="addDirectionForm" class="needs-validation"  novalidate>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Direction Name</label>
+                        <input type="text" class="form-control" id="name" formControlName="name" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter direction name.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="firstStation" class="form-label">First Station Name</label>
+                        <input type="text" class="form-control" id="firstStation" formControlName="firstStation" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter first station name.
+                        </div>
+                    </div>
+                    <div class="modal-footer me-4 justify-content-center">
+                      <button type="submit" id="closeModal" class="btn" style="background-color: #4682B4; color: white; width:55%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;" 
+                       (click)="validateDirectionForm($event)">
+                          Submit
+                      </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addDepartureModal" tabindex="-1" aria-labelledby="addDepartureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="addDepartureModalLabel" style="color: #396b94; width: 100%; max-width: 520px;">Add new departure</h3>
+                <button type="button" class="btn-close" #closebutton data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="busForm" class="needs-validation"  novalidate>
+                  <div class="mb-3 position-relative">
+                    <label for="bus" class="form-label">Select Bus:</label>
+                    <select id="bus" class="form-control"
+                            (change)="onBusSelect($event)" formControlName="busId"
+                             required>
+                      <option value="" disabled selected>Select a bus</option>
+                      <option *ngFor="let bus of busesForSelect" [value]="bus.id">
+                        {{ bus.garageNumber }}, {{ bus.licencePlate }}
+                      </option>
+                    </select>
+  
+                    <div class="invalid-feedback">
+                     Please select a bus.
+                    </div>
+                  </div>
+                  
+                    <div class="modal-footer me-4 justify-content-center">
+                      <button type="submit" id="closeModal" class="btn" style="background-color: #4682B4; color: white; width:55%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;" 
+                       (click)="validateBusForm($event)">
                           Submit
                       </button>
                     </div>

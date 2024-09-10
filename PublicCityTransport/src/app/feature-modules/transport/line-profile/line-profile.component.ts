@@ -8,6 +8,8 @@ import { LineOut, LineType } from '../model/line.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Bus } from '../model/bus.model';
 import { PagedResults } from 'src/app/shared/model/paged-results';
+import { Direction } from '../model/direction.model';
+import { Departure } from '../model/departure.model';
 
 @Component({
   selector: 'app-line-profile',
@@ -18,6 +20,7 @@ export class LineProfileComponent implements OnInit {
 
   @ViewChild('closebutton') closebutton!: ElementRef | undefined;
   @ViewChild('closeEditButton') closeEditButton!: ElementRef | undefined;
+  @ViewChild('closeDirectionButton') closeDirectionButton!: ElementRef | undefined;
 
   constructor(private transportService: TransportService, private authService: AuthService, private route: ActivatedRoute,
     private router: Router, private stakeholdersService: StakeholdersService, private renderer: Renderer2){}
@@ -65,6 +68,8 @@ export class LineProfileComponent implements OnInit {
   busIdToDelete: number | undefined;
   busesForSelect: Bus[] = [];
   isSubmitted = false;
+  departures: Departure[] = [];
+  days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -103,6 +108,11 @@ export class LineProfileComponent implements OnInit {
     lineType: new FormControl('', [Validators.required]),
     length: new FormControl(0, [Validators.required]),
     time: new FormControl(0, [Validators.required, Validators.pattern('[0-9]+')]),
+    });
+
+  directionForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    firstStation: new FormControl('', [Validators.required]),
     });
 
     showInfo() {
@@ -244,7 +254,6 @@ openBusDeleteModal(bus: Bus) {
     if (htmlForm) {
       htmlForm.classList.remove('was-validated');
     }
-    //this.lineForm.reset();
     this.isSubmitted = false;
   }
 
@@ -267,8 +276,85 @@ openBusDeleteModal(bus: Bus) {
     }
   }
 
-  public lineTypeToString(line: LineType): string {
+  createDirection() {
+    const direction: Direction = {
+      id: 0,
+      name: this.directionForm.value.name || "",
+      firstStation: this.directionForm.value.firstStation || "",
+      lineId: this.lineId
+    };
+    this.transportService.createDirection(direction).subscribe({
+      next: () => {
+        this.getLineWithRelations(this.lineId);
+      }
+    });
+  }
+
+  resetDirectionForm() {
+    const htmlForm = document.querySelector('#addDirectionForm');
+    if (htmlForm) {
+      htmlForm.classList.remove('was-validated');
+    }
+    this.isSubmitted = false;
+  }
+
+  validateDirectionForm(event: Event) {
+    event.preventDefault(); 
   
+    this.isSubmitted = true; 
+    const htmlForm = document.querySelector('#addDirectionForm');
+    this.renderer.addClass(htmlForm, 'was-validated');
+   
+    if (this.directionForm.valid) {
+        this.createDirection(); 
+        if (this.closeDirectionButton) {
+          this.closeDirectionButton.nativeElement.click();
+        }
+        this.resetDirectionForm();
+    } else {
+        this.busForm.markAllAsTouched(); 
+    }
+  }
+
+  // Form group for departures
+getDepartureFormGroup(directionId: number): FormGroup {
+  return new FormGroup({
+    day: new FormControl(['', Validators.required]),
+    time: new FormControl(['', Validators.required]),
+    directionId: new FormControl([directionId]),
+    lineId: new FormControl(this.line.id)
+  });
+}
+
+addDeparture(directionId: number) {
+  const departureForm = this.getDepartureFormGroup(directionId);
+  const htmlForm = document.querySelector('#addDepartureForm');
+  this.renderer.addClass(htmlForm, 'was-validated');
+
+  if (departureForm.valid) {
+    const departure: Departure = departureForm.value;
+    // Perform actions like saving the departure to a list or database
+    this.transportService.createDeparture(departure).subscribe({
+      next: () => {
+        this.getLineWithRelations(this.lineId);
+      }
+    });
+  } else {
+    departureForm.markAllAsTouched();
+  }
+}
+
+getDepartures(directionId: number): Departure[] {
+
+  this.transportService.getAllDepartures().subscribe(
+    (result: PagedResults<Departure>) => {
+      result.results.filter(dep => dep.directionId === directionId)
+    }
+  );
+  return this.departures;
+}
+
+public lineTypeToString(line: LineType): string {
     switch (line) {
       case LineType.city:
         return 'City';

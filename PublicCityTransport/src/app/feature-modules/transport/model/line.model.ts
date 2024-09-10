@@ -1,5 +1,5 @@
-import { Direction } from "leaflet";
 import { Bus } from "./bus.model";
+import { Direction } from "./direction.model";
 import { Station } from "./station.model";
 
 export interface Line {
