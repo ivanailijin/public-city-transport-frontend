@@ -49,7 +49,7 @@
             </div>
         </div>
         <div *ngIf="selectedNavItem === 'balanceRecharges'" class="row" style="margin-left:0.5%">
-            <div class="row" style="width: 1010px;">
+            <div class="row" style="width: 1010px;" *ngIf="wallet.balanceRecharges.length > 0">
               <table class="table border-top-color: 2px solid #396b94;">
                 <thead class="table-header">
                   <tr>
@@ -71,6 +71,9 @@
                 </tbody>
               </table>
             </div>
+            <p class="mt-2 fw-semibold secondary" style="color: #ac1212; text-underline-offset: 8px;" *ngIf="wallet.balanceRecharges.length == 0">
+              There are no balance recharges.
+          </p>
         </div>
     </div>
 </div>
@@ -91,7 +94,7 @@
                       Looks good!
                   </div>
                   <div class="invalid-feedback">
-                      Please enter valid bank account.
+                      Please enter valid bank account. Example: 205-1234567891234-23.
                   </div>
               </div>
                   <div class="modal-footer me-4 justify-content-center">
