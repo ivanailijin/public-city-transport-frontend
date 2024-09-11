@@ -5,6 +5,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { WalletProfileComponent } from './wallet-profile/wallet-profile.component';
 import { CreateWalletComponent } from './create-wallet/create-wallet.component';
 import { CreateTicketComponent } from './create-ticket/create-ticket.component';
+import { CreatePersonalizedTicketComponent } from './create-personalized-ticket/create-personalized-ticket.component';
+import { AllTicketsComponent } from './all-tickets/all-tickets.component';
 
 
 
@@ -12,7 +14,9 @@ import { CreateTicketComponent } from './create-ticket/create-ticket.component';
   declarations: [
     WalletProfileComponent,
     CreateWalletComponent,
-    CreateTicketComponent
+    CreateTicketComponent,
+    CreatePersonalizedTicketComponent,
+    AllTicketsComponent
   ],
   imports: [
     CommonModule,

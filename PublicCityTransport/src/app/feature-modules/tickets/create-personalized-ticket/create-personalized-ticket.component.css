@@ -1,0 +1,14 @@
+.custom-width {
+    width: 35%; 
+    height: 40%;
+}
+
+.custom-select option:hover {
+    background-color: #cce7ff;
+    color: #396b94;
+}
+
+.custom-select option {
+   border-bottom: 1px solid #e0e0e0;
+   padding: 5px; 
+}

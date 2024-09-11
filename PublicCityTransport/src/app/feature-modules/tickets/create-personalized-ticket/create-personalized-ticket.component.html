@@ -1,0 +1,65 @@
+<div class="d-flex justify-content-center align-items-center mt-5 mb-5 flex-column">
+    <h3 class="text-center mb-4" style="color: #4682B4;">Personalized Ticket Creation</h3>
+    <div class="card shadow-lg p-4 custom-width border" style="border-radius: 10px; background-color: #f7f9fc;">
+      <form class="row g-3 needs-validation" id="createTicketForm" [formGroup]="personalizedForm" novalidate>
+          <div class="mb-2">
+              <label for="zone" class="form-label">Zone</label>
+              <input type="text" class="form-control" id="zone" formControlName="zone" required>
+              <div class="valid-feedback">
+                  Looks good!
+              </div>
+              <div class="invalid-feedback">
+                  Please enter ticket zone.
+              </div>
+          </div>
+          <div class="mb-2">
+            <label for="currentPrice" class="form-label">Price</label>
+            <input type="number" class="form-control" formControlName="currentPrice" pattern="[0-9]+" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please enter ticket price.
+            </div>
+        </div>
+          <div class="mb-2">
+            <label class="form-label" for="lineType">Personalized Type</label>
+            <div class="d-flex ms-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input mt-2" type="radio" name="personalizedType" id="monthlyticket" value="monthlyticket" formControlName="personalizedType" required>
+                    <label class="form-check-label border p-2 rounded me-2" for="monthlyticket">
+                    Monthly Ticket
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input mt-2" type="radio" name="personalizedType" id="annualticket" value="annualticket" formControlName="personalizedType" required>
+                    <label class="form-check-label border p-2 rounded me-2" for="annualticket">
+                    Annual Ticket
+                    </label>
+                </div>
+            </div>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please select Personalized ticket type.
+            </div>
+        </div>
+        <div class="mb-2">
+            <label for="lines" class="form-label">Select Lines</label>
+            <select class="form-select custom-select" id="lines" multiple formControlName="selectedLines" required>
+              <option *ngFor="let line of lines" [value]="line.id" class="mt-2">{{ line.name }}, {{lineTypeToString(line.lineType)}}</option>
+            </select>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please select at least one line.
+            </div>
+          </div>
+          <div class="col-12 text-center">
+            <button class="btn mt-3" id="createButton" type="submit" style="background-color: #4682B4; color: white; width:75%; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px;">Create</button>
+        </div>
+      </form>
+  </div>
+</div>
