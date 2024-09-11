@@ -10,7 +10,6 @@ import { AllLinesComponent } from './all-lines/all-lines.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BusProfileComponent } from './bus-profile/bus-profile.component';
 import { LineProfileComponent } from './line-profile/line-profile.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { DepartureListComponent } from './departure-list/departure-list.component';
 
 @NgModule({

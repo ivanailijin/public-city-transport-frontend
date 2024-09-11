@@ -15,6 +15,7 @@ import { AllLinesComponent } from './feature-modules/transport/all-lines/all-lin
 import { AllStationsComponent } from './feature-modules/transport/all-stations/all-stations.component';
 import { BusProfileComponent } from './feature-modules/transport/bus-profile/bus-profile.component';
 import { LineProfileComponent } from './feature-modules/transport/line-profile/line-profile.component';
+import { WalletProfileComponent } from './feature-modules/tickets/wallet-profile/wallet-profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -30,7 +31,8 @@ const routes: Routes = [
   { path: 'all-lines', component: AllLinesComponent},
   { path: 'all-stations', component: AllStationsComponent},
   { path: 'bus-profile/:id', component: BusProfileComponent },
-  { path: 'line-profile/:id', component: LineProfileComponent }
+  { path: 'line-profile/:id', component: LineProfileComponent },
+  { path: 'wallet', component: WalletProfileComponent}
 ];
 
 @NgModule({

@@ -23,13 +23,6 @@ export interface Customer extends User {
     birthDate: Date;
 }
 
-export interface CustomerOut extends User {
-    gender: Gender;
-    phoneNumber: string;
-    address: string;
-    birthDate: Date;
-}
-
 export enum UserRole {
     customer = 0,
     employee,

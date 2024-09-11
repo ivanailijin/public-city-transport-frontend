@@ -11,6 +11,7 @@ import { LayoutModule } from './feature-modules/layout/layout.module';
 import { StakeholdersModule } from './feature-modules/stakeholders/stakeholders.module';
 import { TransportModule } from './feature-modules/transport/transport.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { TicketsModule } from './feature-modules/tickets/tickets.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     StakeholdersModule,
     TransportModule,
     ModalModule,
-    ModalModule.forRoot() 
+    ModalModule.forRoot(),
+    TicketsModule
   ],
   providers: [
     {

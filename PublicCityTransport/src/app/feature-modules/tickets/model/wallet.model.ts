@@ -14,5 +14,5 @@ export interface WalletOut {
     bankAccount: string;
     currency: string;
     customerId: number
-    balanceRecharger: BalanceRecharge[]
+    balanceRecharges: BalanceRecharge[]
 }

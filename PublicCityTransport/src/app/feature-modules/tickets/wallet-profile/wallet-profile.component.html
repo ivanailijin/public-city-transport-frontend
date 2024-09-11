@@ -1,0 +1,76 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <img src="assets/pictures/wallet.jpg" class="img-fluid" alt="Bus Image" 
+                 style="height: 300px; width:1000px; object-fit: cover; opacity: 0.9;">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5">
+          <h1 class="mt-3" style="color: #396b94; width: 100%; max-width: 520px; margin-left:28%">Wallet</h1>
+        </div>
+        <!-- <div class="col-1" style="margin-left:39.5%">
+          <button class="btn btn-light mt-4" *ngIf="user && user.role == 1" style="border-color: #396b94; color: #396b94;"
+          data-bs-toggle="modal" data-bs-target="#editBusModal">
+            <span class="me-2">Edit</span>
+            <i class="bi bi-pencil-fill" style="color: #396b94;"></i>
+          </button>
+        </div> -->
+    </div>
+    <div class="row mt-4" style="margin-left:11.5%">
+        <ul class="nav nav-underline">
+            <li class="nav-item">
+              <a class="nav-link active" [class.active]="selectedNavItem === 'info'" (click)="showInfo()" style="color: #396b94; cursor: pointer;">Info</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="selectedNavItem === 'balanceRecharges'" (click)="showBalanceRecharges()" style="color: #396b94; cursor: pointer;">Balance Recharges</a>
+            </li>
+          </ul>
+    </div>
+    <div class="content-container mt-4" style="margin-left:11.5%">
+        <div *ngIf="selectedNavItem === 'info'">
+            <div class="row">
+                <div class="row-12 mb-2">
+                    <div class="card mb-3" style="border-color: #4682B4; max-width: 270px;">
+                        <div class="card-body">
+                            <div class="text-body-secondary fw-normal fs-7" *ngIf="selectedNavItem === 'info'" style="color: #396b94;">
+                                <span class="fw-bold">Total Balance • </span> {{wallet.balance}} {{wallet.currency}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3" style="border-color: #4682B4; max-width: 350px;">
+                        <div class="card-body">
+                            <div class="text-body-secondary fw-normal fs-7" *ngIf="selectedNavItem === 'info'">
+                                <span class="fw-bold">Bank Account • </span> {{wallet.bankAccount}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="selectedNavItem === 'balanceRecharges'" class="row" style="margin-left:0.5%">
+            <div class="row" style="width: 1010px;">
+              <table class="table border-top-color: 2px solid #396b94;">
+                <thead class="table-header">
+                  <tr>
+                    <th scope="col" class="index-column">•</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Date and Time</th>
+                    <th scope="col">Admin Name</th>
+                    <th scope="col">Admin Surname</th>
+                  </tr>
+                </thead>
+                <tbody class="table-body table-group-divider">
+                  <tr *ngFor="let recharge of wallet.balanceRecharges; let i = index">
+                    <th scope="row" class="index-column">{{ i + 1 }}</th>
+                    <td>{{ recharge.amount }} {{wallet.currency}}</td>
+                    <td>{{ recharge.dateTime | date: 'medium' }}</td>
+                    <td>{{ recharge.admin.name}}</td>
+                    <td>{{ recharge.admin.surname}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>

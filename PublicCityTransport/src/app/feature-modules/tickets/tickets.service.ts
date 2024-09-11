@@ -102,7 +102,7 @@ updateWallet(wallet: Wallet): Observable<Wallet> {
   return this.http.put<Wallet>(environment.apiHost + 'wallet/update/' + wallet.id, wallet)
 }
 
-getByCustomerId(customerId: number): Observable<WalletOut> {
+getWalletByCustomerId(customerId: number): Observable<WalletOut> {
   return this.http.get<WalletOut>(environment.apiHost + 'wallet/getByCustomerId/' + customerId);
 }
 
