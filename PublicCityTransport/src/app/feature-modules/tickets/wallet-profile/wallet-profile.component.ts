@@ -4,6 +4,7 @@ import { StakeholdersService } from '../../stakeholders/stakeholders.service';
 import { TicketsService } from '../tickets.service';
 import { Customer, User } from 'src/app/infrastructure/auth/model/user.model';
 import { WalletOut } from '../model/wallet.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-wallet-profile',
@@ -13,6 +14,7 @@ import { WalletOut } from '../model/wallet.model';
 export class WalletProfileComponent implements OnInit{
 
  @ViewChild('closebutton') closebutton!: ElementRef | undefined;
+ @ViewChild('closeEditButton') closeEditButton!: ElementRef | undefined;
 
   constructor(private authService: AuthService, private stakeholdersService: StakeholdersService, private renderer: Renderer2,
     private ticketService: TicketsService) {}
@@ -74,6 +76,10 @@ export class WalletProfileComponent implements OnInit{
     })();
   }
 
+  walletForm = new FormGroup({
+    bankAccount: new FormControl('', [Validators.required, Validators.pattern(/^\d{3}-\d{13}-\d{2}$/)])
+    });
+
   showInfo() {
     this.selectedNavItem = 'info';
   }
@@ -92,6 +98,9 @@ export class WalletProfileComponent implements OnInit{
             this.customer = result;
             console.log('Customer:', result);
               this.getWalletByCustomerId();
+              this.walletForm.patchValue({
+                bankAccount: this.wallet.bankAccount
+              });
           },
           error: (err) => {
             console.error('Error fetching customer:', err); 
@@ -106,5 +115,38 @@ export class WalletProfileComponent implements OnInit{
       this.wallet = result;
       console.log(this.wallet)
     })
+  }
+
+  validateEditForm(event: Event) {
+    event.preventDefault(); 
+  
+    const htmlForm = document.querySelector('#editWalletForm');
+    this.renderer.addClass(htmlForm, 'was-validated');
+   
+    if (this.walletForm.valid) {
+        this.updateWallet(); 
+        if (this.closeEditButton) {
+          this.closeEditButton.nativeElement.click();
+        }
+        this.resetEditForm();
+    } else {
+        this.walletForm.markAllAsTouched(); 
+    }
+  }
+
+  updateWallet() {
+    this.ticketService.updateWallet(this.wallet).subscribe({
+      next: () => { 
+        this.getWalletByCustomerId();
+      }
+    })
+  }
+
+  resetEditForm() {
+    const htmlForm = document.querySelector('#editBusForm');
+    if (htmlForm) {
+      htmlForm.classList.remove('was-validated');
+    }
+    this.walletForm.reset();
   }
 }

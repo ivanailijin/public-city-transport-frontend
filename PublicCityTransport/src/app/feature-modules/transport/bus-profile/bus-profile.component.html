@@ -34,21 +34,21 @@
         <div *ngIf="selectedNavItem === 'info'">
             <div class="row">
                 <div class="col-12 mb-2">
-                    <div class="card mb-3" style="border-color: #4682B4; max-width: 270px;">
+                    <div class="card mb-3" style="border-color: #4682B4; border-width: 2px; max-width: 270px;">
                         <div class="card-body">
                             <div class="text-body-secondary fw-normal fs-7" *ngIf="selectedNavItem === 'info'" style="color: #396b94;">
                                 <span class="fw-bold">Garage Number • </span> {{bus.garageNumber}}
                             </div>
                         </div>
                     </div>
-                    <div class="card mb-3" style="border-color: #4682B4; max-width: 270px;">
+                    <div class="card mb-3" style="border-color: #4682B4; border-width: 2px; max-width: 270px;">
                         <div class="card-body">
                             <div class="text-body-secondary fw-normal fs-7" *ngIf="selectedNavItem === 'info'">
                                 <span class="fw-bold">Bus Brand • </span> {{bus.busBrand}}
                             </div>
                         </div>
                     </div>
-                    <div class="card" style="border-color: #4682B4; max-width: 270px;">
+                    <div class="card" style="border-color: #4682B4; border-width: 2px; max-width: 270px;">
                         <div class="card-body">
                             <div class="text-body-secondary fw-normal fs-7" *ngIf="selectedNavItem === 'info'">
                                 <span class="fw-bold">Year of Production • </span> {{bus.yearOfProduction}}
@@ -112,8 +112,8 @@
                   <th scope="col" class="index-column">•</th>
                   <th scope="col">Name</th>
                   <th scope="col">Type</th>
-                  <th scope="col">Length (km)</th>
-                  <th scope="col">Time (min)</th>
+                  <th scope="col">Length</th>
+                  <th scope="col">Time</th>
                 </tr>
               </thead>
               <tbody class="table-body table-group-divider">
@@ -121,8 +121,8 @@
                   <th scope="row" class="index-column">{{ i + 1 }}</th>
                   <td>{{ line.name }}</td>
                   <td>{{ toLineTypeString(line.lineType)}}</td>
-                  <td>{{ line.length }}</td>
-                  <td>{{ line.time}}</td>
+                  <td>{{ line.length }} km</td>
+                  <td>{{ line.time}} min</td>
                 </tr>
               </tbody>
             </table>

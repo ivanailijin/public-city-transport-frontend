@@ -9,13 +9,13 @@
         <div class="col-5">
           <h1 class="mt-3" style="color: #396b94; width: 100%; max-width: 520px; margin-left:28%">Wallet</h1>
         </div>
-        <!-- <div class="col-1" style="margin-left:39.5%">
-          <button class="btn btn-light mt-4" *ngIf="user && user.role == 1" style="border-color: #396b94; color: #396b94;"
-          data-bs-toggle="modal" data-bs-target="#editBusModal">
+        <div class="col-1" style="margin-left:39.5%">
+          <button class="btn btn-light mt-4" *ngIf="user && user.role == 0" style="border-color: #396b94; color: #396b94;"
+          data-bs-toggle="modal" data-bs-target="#editWalletModal" (click)="getWalletByCustomerId()">
             <span class="me-2">Edit</span>
             <i class="bi bi-pencil-fill" style="color: #396b94;"></i>
           </button>
-        </div> -->
+        </div>
     </div>
     <div class="row mt-4" style="margin-left:11.5%">
         <ul class="nav nav-underline">
@@ -31,14 +31,14 @@
         <div *ngIf="selectedNavItem === 'info'">
             <div class="row">
                 <div class="row-12 mb-2">
-                    <div class="card mb-3" style="border-color: #4682B4; max-width: 270px;">
+                    <div class="card mb-3" style="border-color: #4682B4; max-width: 270px; border-width: 2px">
                         <div class="card-body">
                             <div class="text-body-secondary fw-normal fs-7" *ngIf="selectedNavItem === 'info'" style="color: #396b94;">
                                 <span class="fw-bold">Total Balance • </span> {{wallet.balance}} {{wallet.currency}}
                             </div>
                         </div>
                     </div>
-                    <div class="card mb-3" style="border-color: #4682B4; max-width: 350px;">
+                    <div class="card mb-3" style="border-color: #4682B4; max-width: 350px; border-width: 2px">
                         <div class="card-body">
                             <div class="text-body-secondary fw-normal fs-7" *ngIf="selectedNavItem === 'info'">
                                 <span class="fw-bold">Bank Account • </span> {{wallet.bankAccount}}
@@ -73,4 +73,35 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="editWalletModal" tabindex="-1" aria-labelledby="editWalletModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h3 class="modal-title" id="editWalletModalLabel" style="color: #396b94; width: 100%; max-width: 520px;">Edit Wallet</h3>
+              <button type="button" class="btn-close" #closeEditButton data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form [formGroup]="walletForm" id ="editWalletForm" class="needs-validation"  novalidate>
+                <div class="mb-2">
+                  <label for="garageNumber" class="form-label">Bank Acount</label>
+                  <input type="text" [(ngModel)]="wallet.bankAccount" pattern="^\d{3}-\d{13}-\d{2}$" class="form-control" id="bankAccount" formControlName="bankAccount" required>
+                  <div class="valid-feedback">
+                      Looks good!
+                  </div>
+                  <div class="invalid-feedback">
+                      Please enter valid bank account.
+                  </div>
+              </div>
+                  <div class="modal-footer me-4 justify-content-center">
+                    <button type="submit" id="closeEditModal" class="btn" style="background-color: #4682B4; color: white; width:55%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;" 
+                     (click)="validateEditForm($event)">
+                        Submit
+                    </button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
 </div>
