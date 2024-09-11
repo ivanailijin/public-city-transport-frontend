@@ -12,7 +12,7 @@ export enum TicketType {
     personalized
 }
 
-export interface Unpersonalized extends Ticket {
+export interface Unpersonalized {
     id: number,
     zone: string;
     ticketType: TicketType;
@@ -42,7 +42,7 @@ export enum UnpersonalizedType {
     weeklyticket
 }
 
-export interface Personalized extends Ticket {
+export interface Personalized {
     id: number,
     zone: string;
     ticketType: TicketType;

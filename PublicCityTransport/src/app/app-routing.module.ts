@@ -17,6 +17,7 @@ import { BusProfileComponent } from './feature-modules/transport/bus-profile/bus
 import { LineProfileComponent } from './feature-modules/transport/line-profile/line-profile.component';
 import { WalletProfileComponent } from './feature-modules/tickets/wallet-profile/wallet-profile.component';
 import { CreateWalletComponent } from './feature-modules/tickets/create-wallet/create-wallet.component';
+import { CreateTicketComponent } from './feature-modules/tickets/create-ticket/create-ticket.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'line-profile/:id', component: LineProfileComponent },
   { path: 'wallet-profile', component: WalletProfileComponent},
   { path: 'create-wallet', component: CreateWalletComponent},
+  { path: 'create-nonpersonalized-ticket', component: CreateTicketComponent}
 ];
 
 @NgModule({
