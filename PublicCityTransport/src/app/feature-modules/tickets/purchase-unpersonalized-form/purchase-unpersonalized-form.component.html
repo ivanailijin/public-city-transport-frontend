@@ -1,0 +1,78 @@
+<div class="d-flex justify-content-center align-items-center mt-5 mb-5 flex-column">
+  <h3 class="text-center mb-4" style="color: #4682B4;">Purchase Non-Personalized Ticket</h3>
+  <div class="card shadow-lg p-4 custom-width border" style="border-radius: 10px; background-color: #f7f9fc;">
+      <form class="row g-3 needs-validation" id="purchaseTicketForm" [formGroup]="purchaseForm" novalidate>
+          <div class="mb-3">
+              <label for="lineSelect" class="form-label">Select Line</label>
+              <select id="lineSelect" class="form-select" formControlName="selectedLineId" (change)="onLineChange($event)" required>
+                  <option *ngFor="let line of lines" [value]="line.id">{{ line.name }}</option>
+              </select>
+              <div class="valid-feedback">
+                  Looks good!
+              </div>
+              <div class="invalid-feedback">
+                  Please select line.
+              </div>
+          </div>
+
+          <div class="mb-3">
+              <label for="cardSelect" class="form-label">Select Ticket</label>
+              <select id="cardSelect" class="form-select" formControlName="selectedTicketId" (change)="onCardChange($event)" [disabled]="!selectedLineId" required>
+                  <option *ngFor="let ticket of tickets" [value]="ticket.id">{{ ticket.zone }}, {{ticket.unpersonalizedType}}</option>
+              </select>
+              <div class="valid-feedback">
+                  Looks good!
+              </div>
+              <div class="invalid-feedback">
+                  Please enter non-personalized ticket type.
+              </div>
+          </div>
+
+          <div *ngIf="selectedTicket.unpersonalizedType === 0 && selectedTicketId != 0">
+              <label for="directionSelect" class="form-label">Select Direction</label>
+              <select id="directionSelect" class="form-select" formControlName="selectedDirectionId" (change)="onDirectionChange($event)" required>
+                  <option *ngFor="let direction of directions" [value]="direction.id">{{ direction.name }}</option>
+              </select>
+              <div class="valid-feedback">
+                  Looks good!
+              </div>
+              <div class="invalid-feedback">
+                  Please select direction.
+              </div>
+          </div>
+
+          <div *ngIf="selectedTicketId != 0 && selectedTicket.unpersonalizedType === 0">
+            <label for="daySelect" class="form-label">Select Day</label>
+            <select id="daySelect" class="form-select" formControlName="selectedDay" (change)="onDayChange($event)" required>
+                <option value="Workday">Workday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+            </select>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please select a day.
+            </div>
+        </div>
+        
+        <div *ngIf="selectedTicketId != 0 && selectedTicket.unpersonalizedType === 0">
+            <label for="departureSelect" class="form-label">Select Departure</label>
+            <select id="departureSelect" class="form-select" formControlName="selectedDepartureId" required>
+                <option *ngFor="let departure of filteredDepartures" [value]="departure.id">{{ departure.time }}</option>
+            </select>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please select departure.
+            </div>
+            <p>Price: {{ selectedTicket.currentPrice }}</p>
+        </div>
+
+          <div class="col-12 text-center">
+              <button class="btn mt-3" id="createButton" type="submit" style="background-color: #4682B4; color: white; width:75%; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px;">Purchase Ticket</button>
+          </div>
+      </form>
+  </div>
+</div>

@@ -19,6 +19,7 @@ import { WalletProfileComponent } from './feature-modules/tickets/wallet-profile
 import { CreateWalletComponent } from './feature-modules/tickets/create-wallet/create-wallet.component';
 import { CreateTicketComponent } from './feature-modules/tickets/create-ticket/create-ticket.component';
 import { CreatePersonalizedTicketComponent } from './feature-modules/tickets/create-personalized-ticket/create-personalized-ticket.component';
+import { PurchaseUnpersonalizedFormComponent } from './feature-modules/tickets/purchase-unpersonalized-form/purchase-unpersonalized-form.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -38,7 +39,8 @@ const routes: Routes = [
   { path: 'wallet-profile', component: WalletProfileComponent},
   { path: 'create-wallet', component: CreateWalletComponent},
   { path: 'create-nonpersonalized-ticket', component: CreateTicketComponent},
-  { path: 'create-personalized-ticket', component: CreatePersonalizedTicketComponent}
+  { path: 'create-personalized-ticket', component: CreatePersonalizedTicketComponent},
+  { path: 'purchase-unpersonalized-ticket', component: PurchaseUnpersonalizedFormComponent}
 ];
 
 @NgModule({

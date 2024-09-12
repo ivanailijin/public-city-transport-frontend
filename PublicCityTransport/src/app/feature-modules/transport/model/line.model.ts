@@ -1,4 +1,5 @@
 import { Bus } from "./bus.model";
+import { Departure } from "./departure.model";
 import { DirectionOut } from "./direction.model";
 import { Station } from "./station.model";
 

@@ -52,13 +52,22 @@ getAllUnpersonalizedWithRelations(): Observable<UnpersonalizedOut[]> {
   return this.http.get<UnpersonalizedOut[]>(environment.apiHost + 'unpersonalized/getAllWithRelations');
 }
 
-buyUnpersonalizedTicket(customerId: number, ticketId: number, departureId: number): Observable<any> {
-  return this.http.get(`${environment.apiHost}unpersonalized/buyUnpersonalizedTicket/${customerId}/${ticketId}/${departureId}`);
+buyUnpersonalizedOneTimeTicket(customerId: number, ticketId: number, departureId: number): Observable<any> {
+  return this.http.get<any>(`${environment.apiHost}unpersonalized/buyUnpersonalizedOneTimeTicket/${customerId}/${ticketId}/${departureId}`);
+}
+
+buyUnpersonalizedTicket(customerId: number, ticketId: number): Observable<any> {
+  return this.http.get<any>(`${environment.apiHost}unpersonalized/buyUnpersonalizedTicket/${customerId}/${ticketId}`);
 }
 
 getCustomerUnpersonalizedTickets(customerId: number): Observable<CustomerUnpersonalizedTicketOut[]> {
   return this.http.get<CustomerUnpersonalizedTicketOut[]>(environment.apiHost + 'unpersonalized/getCustomerUnpersonalizedTickets/' + customerId);
 }
+
+getLineUnpersonalizedTickets(lineId: number): Observable<Unpersonalized[]> {
+  return this.http.get<Unpersonalized[]>(environment.apiHost + 'unpersonalized/getLineUnpersonalizedTickets/' + lineId);
+}
+
 
 //PERSONALIZED
 getAllPersonalized(): Observable<PagedResults<Personalized>> {
