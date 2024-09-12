@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-center align-items-center mt-5 mb-5 flex-column">
+    <h3 class="text-center mb-4" style="color: #4682B4;">Personalized Ticket Request Creation</h3>
+    <div class="card shadow-lg p-4 custom-width border" style="border-radius: 10px; background-color: #f7f9fc;">
+        <form class="row g-3 needs-validation" id="personalizedRequestForm" [formGroup]="requestForm" novalidate>
+            <div class="mb-3">
+                <label for="userCategory" class="form-label">User Category</label>
+                <select id="userCategory" class="form-select" formControlName="userCategory" required>
+                    <option value="citizen">Citizen</option>
+                    <option value="pupil">Pupil</option>
+                    <option value="student">Student</option>
+                    <option value="employee">Employee</option>
+                    <option value="retiree">Retiree</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please select user category.
+                </div>
+            </div>
+  
+            <div class="mb-3">
+                <label for="cardSelect" class="form-label">Ticket Zone</label>
+                <select id="cardSelect" class="form-select" formControlName="selectedTicketZone" required>
+                    <option value="First zone - I">First zone - I</option>
+                    <option value="Second zone - II">Second zone - II</option>
+                    <option value="Third zone - III">Third zone - III</option>
+                    <option value="Fourth zone - IV">Fourth zone - IV</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please select ticket zone.
+                </div>
+            </div>
+  
+            <div class="mb-3">
+                <label for="directionSelect" class="form-label">Personalized Ticket Type</label>
+                <select id="directionSelect" class="form-select" formControlName="selectedPersonalizedType" required>
+                    <option value="monthlyticket">Monthly Ticket</option>
+                    <option value="annualticket">Annual Ticket</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please select personalized ticket type.
+                </div>
+            </div>
+          
+          <!-- <div *ngIf="selectedTicket.id != 0">
+              <label for="departureSelect" class="form-label">Select Departure</label>
+              <select id="departureSelect" class="form-select" formControlName="selectedDepartureId" required>
+                  <option *ngFor="let departure of filteredDepartures" [value]="departure.id">{{ departure.time }}</option>
+              </select>
+              <div class="valid-feedback">
+                  Looks good!
+              </div>
+              <div class="invalid-feedback">
+                  Please select departure.
+              </div>
+              <p>Price: {{ selectedTicket.currentPrice }}</p>
+          </div> -->
+  
+            <div class="col-12 text-center">
+                <button class="btn mt-3" id="createButton" type="submit" style="background-color: #4682B4; color: white; width:75%; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px;">Create Request</button>
+            </div>
+        </form>
+    </div>
+  </div>
+  

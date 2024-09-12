@@ -8,6 +8,9 @@ import { CreateTicketComponent } from './create-ticket/create-ticket.component';
 import { CreatePersonalizedTicketComponent } from './create-personalized-ticket/create-personalized-ticket.component';
 import { AllTicketsComponent } from './all-tickets/all-tickets.component';
 import { PurchaseUnpersonalizedFormComponent } from './purchase-unpersonalized-form/purchase-unpersonalized-form.component';
+import { CreatePersonalizedRequestComponent } from './create-personalized-request/create-personalized-request.component';
+import { AllPersonalizedRequestsComponent } from './all-personalized-requests/all-personalized-requests.component';
+import { PurchasedTicketListComponent } from './purchased-ticket-list/purchased-ticket-list.component';
 
 
 
@@ -18,7 +21,10 @@ import { PurchaseUnpersonalizedFormComponent } from './purchase-unpersonalized-f
     CreateTicketComponent,
     CreatePersonalizedTicketComponent,
     AllTicketsComponent,
-    PurchaseUnpersonalizedFormComponent
+    PurchaseUnpersonalizedFormComponent,
+    CreatePersonalizedRequestComponent,
+    AllPersonalizedRequestsComponent,
+    PurchasedTicketListComponent
   ],
   imports: [
     CommonModule,

@@ -120,11 +120,11 @@ getAllPersonalizedTicketRequests(): Observable<PagedResults<PersonalizedTicketRe
   return this.http.get<PagedResults<PersonalizedTicketRequest>>(environment.apiHost + 'personalizedTicketRequest/getAll');
 }
 
-createPersonalizedTicketRequests(personalizedTicketRequest: PersonalizedTicketRequest): Observable<PersonalizedTicketRequest> {
+createPersonalizedTicketRequest(personalizedTicketRequest: PersonalizedTicketRequest): Observable<PersonalizedTicketRequest> {
   return this.http.post<PersonalizedTicketRequest>(environment.apiHost + 'personalizedTicketRequest/create', personalizedTicketRequest);
 }
 
-updatePersonalizedTicketRequests(personalizedTicketRequest: PersonalizedTicketRequest): Observable<PersonalizedTicketRequest> {
+updatePersonalizedTicketRequest(personalizedTicketRequest: PersonalizedTicketRequest): Observable<PersonalizedTicketRequest> {
   return this.http.put<PersonalizedTicketRequest>(environment.apiHost + 'personalizedTicketRequest/update/' + personalizedTicketRequest.id, personalizedTicketRequest)
 }
 

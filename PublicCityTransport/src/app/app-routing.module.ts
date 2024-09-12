@@ -20,6 +20,7 @@ import { CreateWalletComponent } from './feature-modules/tickets/create-wallet/c
 import { CreateTicketComponent } from './feature-modules/tickets/create-ticket/create-ticket.component';
 import { CreatePersonalizedTicketComponent } from './feature-modules/tickets/create-personalized-ticket/create-personalized-ticket.component';
 import { PurchaseUnpersonalizedFormComponent } from './feature-modules/tickets/purchase-unpersonalized-form/purchase-unpersonalized-form.component';
+import { CreatePersonalizedRequestComponent } from './feature-modules/tickets/create-personalized-request/create-personalized-request.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -40,7 +41,8 @@ const routes: Routes = [
   { path: 'create-wallet', component: CreateWalletComponent},
   { path: 'create-nonpersonalized-ticket', component: CreateTicketComponent},
   { path: 'create-personalized-ticket', component: CreatePersonalizedTicketComponent},
-  { path: 'purchase-unpersonalized-ticket', component: PurchaseUnpersonalizedFormComponent}
+  { path: 'purchase-unpersonalized-ticket', component: PurchaseUnpersonalizedFormComponent},
+  { path: 'create-personalized-ticket-request', component: CreatePersonalizedRequestComponent}
 ];
 
 @NgModule({

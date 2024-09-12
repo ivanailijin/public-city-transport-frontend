@@ -56,7 +56,7 @@ export interface PersonalizedOut {
     ticketType: TicketType;
     currentPrice: number;
     personalizedType: PersonalizedType;
-    line: Line[];
+    lines: Line[];
 }
 
 export interface CustomerPersonalizedTicketOut extends PersonalizedOut {

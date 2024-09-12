@@ -73,7 +73,7 @@ export class CreatePersonalizedTicketComponent implements OnInit{
     const personalizedRegistration: Personalized = {
       id: 0,
       zone: this.personalizedForm.value.zone || "",
-      ticketType: 0,
+      ticketType: 1,
       currentPrice: Number(this.personalizedForm.value.currentPrice) || 0,
       personalizedType: this.getPersonalizedTypeValue(this.personalizedForm.value.personalizedType || 'monthlyticket')
     };
