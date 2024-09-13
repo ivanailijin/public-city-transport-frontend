@@ -8,6 +8,7 @@ import { Line, } from '../../transport/model/line.model';
 import { Unpersonalized } from '../model/ticket.model';
 import { Departure } from '../../transport/model/departure.model';
 import { DirectionOut } from '../../transport/model/direction.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-purchase-unpersonalized-form',
@@ -46,7 +47,7 @@ export class PurchaseUnpersonalizedFormComponent implements OnInit {
   }
 
   constructor(private ticketService: TicketsService, private transportService: TransportService,
-    private authService: AuthService) {}
+    private authService: AuthService, private router: Router) {}
 
   purchaseForm = new FormGroup({
     selectedLineId: new FormControl('', [Validators.required]),
@@ -181,11 +182,11 @@ export class PurchaseUnpersonalizedFormComponent implements OnInit {
     if (this.purchaseForm.valid) {
       if (unpersonalizedType === 0 && this.selectedDepartureId) {
         this.ticketService.buyUnpersonalizedOneTimeTicket(this.user.id, this.selectedTicketId, this.selectedDepartureId).subscribe(response => {
-
+          this.router.navigate(['/all-purchased-tickets']);
         });
       } else {
         this.ticketService.buyUnpersonalizedTicket(this.user.id, this.selectedTicketId).subscribe(response => {
-
+          this.router.navigate(['/all-purchased-tickets']);
         });
       }
     }

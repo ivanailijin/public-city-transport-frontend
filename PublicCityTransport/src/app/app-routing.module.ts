@@ -22,6 +22,7 @@ import { CreatePersonalizedTicketComponent } from './feature-modules/tickets/cre
 import { PurchaseUnpersonalizedFormComponent } from './feature-modules/tickets/purchase-unpersonalized-form/purchase-unpersonalized-form.component';
 import { CreatePersonalizedRequestComponent } from './feature-modules/tickets/create-personalized-request/create-personalized-request.component';
 import { AllPersonalizedRequestsComponent } from './feature-modules/tickets/all-personalized-requests/all-personalized-requests.component';
+import { PurchasedTicketListComponent } from './feature-modules/tickets/purchased-ticket-list/purchased-ticket-list.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -44,7 +45,8 @@ const routes: Routes = [
   { path: 'create-personalized-ticket', component: CreatePersonalizedTicketComponent},
   { path: 'purchase-unpersonalized-ticket', component: PurchaseUnpersonalizedFormComponent},
   { path: 'create-personalized-ticket-request', component: CreatePersonalizedRequestComponent},
-  { path: 'all-personalized-ticket-requests', component: AllPersonalizedRequestsComponent}
+  { path: 'all-personalized-ticket-requests', component: AllPersonalizedRequestsComponent},
+  { path: 'all-purchased-tickets', component: PurchasedTicketListComponent}
 ];
 
 @NgModule({

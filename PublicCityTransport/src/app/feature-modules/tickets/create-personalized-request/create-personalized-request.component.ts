@@ -5,6 +5,7 @@ import { PersonalizedOut, PersonalizedType } from '../model/ticket.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PersonalizedTicketRequest, UserCategory } from '../model/request.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-personalized-request',
@@ -34,7 +35,7 @@ export class CreatePersonalizedRequestComponent implements OnInit {
   formSubmitted: boolean = false;
   personalizedTickets: PersonalizedOut[] = [];
 
-  constructor(private ticketService: TicketsService, private authService: AuthService) {}
+  constructor(private ticketService: TicketsService, private authService: AuthService, private router: Router) {}
 
     requestForm = new FormGroup({
       userCategory: new FormControl('', [Validators.required]),
@@ -100,7 +101,7 @@ export class CreatePersonalizedRequestComponent implements OnInit {
     if (this.requestForm.valid) {
       if (this.selectedTicket && this.selectedTicket.id) {
         this.ticketService.createPersonalizedTicketRequest(requestRegistration).subscribe(response => {
-
+          this.router.navigate(['/all-purchased-tickets']);
         });
       } 
     }
