@@ -1,1 +1,156 @@
-<p>all-personalized-requests works!</p>
+<div class="container mt-4" style="max-width: 1050px;">
+    <div class="row justify-content-center">
+      <div class="col-12 text-center">
+        <h1 class="mt-3" style="color: #396b94;">Personalized Ticket Requests</h1>
+      </div>
+    </div>
+    <div class="row mt-5 justify-content-center">
+      <div class="col-auto">
+        <ul class="nav nav-underline justify-content-center">
+          <li class="nav-item">
+            <a class="nav-link active" [class.active]="selectedNavItem === 'onhold'" (click)="showOnHold()" style="color: #396b94; cursor: pointer;">On Hold</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="selectedNavItem === 'accepted'" (click)="showAccepted()" style="color: #396b94; cursor: pointer;">Accepted</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="selectedNavItem === 'rejected'" (click)="showRejected()" style="color: #396b94; cursor: pointer;">Rejected</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div *ngIf="selectedNavItem === 'onhold'" class="row mt-5" style="margin-left:5%">
+        <div class="row" style="width: 1010px;">
+          <table class="table border-top-color: 2px solid #396b94;">
+            <thead class="table-header">
+              <tr>
+                <th scope="col" class="index-column">•</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Customer Surname</th>
+                <th scope="col">Customer Category</th>
+                <th scope="col">Ticket Type</th>
+                <th scope="col">Ticket Zone</th>
+              </tr>
+            </thead>
+            <tbody class="table-body table-group-divider">
+              <tr *ngFor="let request of requestsOnHold; let i = index">
+                <th scope="row" class="index-column">{{ i + 1 }}</th>
+                <td>{{ request.customer.name }}</td>
+                <td>{{ request.customer.surname }}</td>
+                <td>{{ toUserCategoryString(request.userCategory)}}</td>
+                <td>{{ toPersonalizedTypeString(request.personalized.personalizedType)}}</td>
+                <td>{{ request.personalized.zone }}</td>
+                <td>
+                  <button class="btn btn-light btn-outline-secondary"
+                  data-bs-toggle="modal"
+                  (click)="setSelectedRequest(request)" 
+                  data-bs-target="#acceptConfirmationModal">Approve</button>
+                </td>
+                <td>
+                    <button class="btn btn-light btn-outline-secondary"
+                    data-bs-toggle="modal"
+                    (click)="setSelectedRequest(request)" 
+                    data-bs-target="#rejectConfirmationModal">Reject</button>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+    <div *ngIf="selectedNavItem === 'accepted'" class="row mt-5" style="margin-left:5%">
+        <div class="row" style="width: 1010px;">
+          <table class="table border-top-color: 2px solid #396b94;">
+            <thead class="table-header">
+              <tr>
+                <th scope="col" class="index-column">•</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Customer Surname</th>
+                <th scope="col">Customer Category</th>
+                <th scope="col">Ticket Type</th>
+                <th scope="col">Ticket Zone</th>
+                <th scope="col">Admin Name</th>
+                <th scope="col">Admin Surname</th>
+              </tr>
+            </thead>
+            <tbody class="table-body table-group-divider">
+              <tr *ngFor="let request of requestsAccepted; let i = index">
+                <th scope="row" class="index-column">{{ i + 1 }}</th>
+                <td>{{ request.customer.name }}</td>
+                <td>{{ request.customer.surname }}</td>
+                <td>{{ toUserCategoryString(request.userCategory)}}</td>
+                <td>{{ toPersonalizedTypeString(request.personalized.personalizedType)}}</td>
+                <td>{{ request.personalized.zone }}</td>
+                <td>{{ request.admin.name }}</td>
+                <td>{{ request.admin.surname }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+    <div *ngIf="selectedNavItem === 'rejected'" class="row mt-5" style="margin-left:5%">
+        <div class="row" style="width: 1010px;">
+          <table class="table border-top-color: 2px solid #396b94;">
+            <thead class="table-header">
+              <tr>
+                <th scope="col" class="index-column">•</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Customer Surname</th>
+                <th scope="col">Customer Category</th>
+                <th scope="col">Ticket Type</th>
+                <th scope="col">Ticket Zone</th>
+                <th scope="col">Admin Name</th>
+                <th scope="col">Admin Surname</th>
+              </tr>
+            </thead>
+            <tbody class="table-body table-group-divider">
+              <tr *ngFor="let request of requestsRejected; let i = index">
+                <th scope="row" class="index-column">{{ i + 1 }}</th>
+                <td>{{ request.customer.name }}</td>
+                <td>{{ request.customer.surname }}</td>
+                <td>{{ toUserCategoryString(request.userCategory)}}</td>
+                <td>{{ toPersonalizedTypeString(request.personalized.personalizedType)}}</td>
+                <td>{{ request.personalized.zone }}</td>
+                <td>{{ request.admin.name }}</td>
+                <td>{{ request.admin.surname }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="acceptConfirmationModal" tabindex="-1" aria-labelledby="acceptConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="acceptConfirmationModalLabel" style="color: #396b94; width: 100%; max-width: 520px;">Confirm Approval</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to approve request?</p>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-primary" (click)="approveRequest()" data-bs-dismiss="modal"
+          style="background-color: #4682B4; color: white; width:55%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;">Approve</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="rejectConfirmationModal" tabindex="-1" aria-labelledby="rejectConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="rejectConfirmationModalLabel" style="color: #396b94; width: 100%; max-width: 520px;">Confirm Rejection</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to reject request?</p>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-primary" (click)="rejectRequest()" data-bs-dismiss="modal"
+          style="background-color: #4682B4; color: white; width:55%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;">Reject</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -5,7 +5,7 @@ import { environment } from 'src/env/environment';
 import { CustomerPersonalizedTicketOut, CustomerUnpersonalizedTicketOut, Personalized, PersonalizedOut, Unpersonalized, UnpersonalizedOut } from './model/ticket.model';
 import { PagedResults } from 'src/app/shared/model/paged-results';
 import { Wallet, WalletOut } from './model/wallet.model';
-import { PersonalizedTicketRequest } from './model/request.model';
+import { PersonalizedTicketRequest, PersonalizedTicketRequestOut } from './model/request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -134,5 +134,9 @@ approvePersonalizedTicketRequest(requestId: number, adminId: number): Observable
 
 rejectPersonalizedTicketRequest(requestId: number, adminId: number): Observable<PersonalizedTicketRequest> {
   return this.http.get<PersonalizedTicketRequest>(`${environment.apiHost}personalizedTicketRequest/rejectPersonalizedRequest/${requestId}/${adminId}`);
+}
+
+getAllRequestsWithRelations(): Observable<PersonalizedTicketRequestOut[]> {
+  return this.http.get<PersonalizedTicketRequestOut[]>(environment.apiHost + 'personalizedTicketRequest/getAllWithRelations');
 }
 }
