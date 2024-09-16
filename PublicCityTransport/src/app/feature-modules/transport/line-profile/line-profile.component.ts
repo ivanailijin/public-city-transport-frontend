@@ -76,6 +76,8 @@ export class LineProfileComponent implements OnInit {
   selectedDirectionId: number | undefined;
   selectedStationId: number = 0;
   stationsForSelect: StationOut[] = [];
+  selectedStationToDelete: number | undefined;
+  selectedStationNameToDelete: string = "";
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -474,4 +476,27 @@ public lineTypeToString(line: LineType): string {
         return 'City';
     }
   }
+
+  setSelectedStation(station: StationOut, direction: Direction) {
+    this.selectedStationNameToDelete = station.name! + ',' + station.location.address;
+    this.selectedStationToDelete = station.id; 
+    this.selectedDirectionId = direction.id;
+    this.selectedDirectionName = direction.name;
+  }
+
+  deleteStation() {
+    this.transportService.removeStation(this.selectedStationToDelete!, this.selectedDirectionId!).subscribe(
+      () => {
+        const directionToUpdate = this.line.directions.find(direction => direction.id === this.selectedDirectionId);
+      
+        if (directionToUpdate) {
+          directionToUpdate.stations = directionToUpdate.stations.filter(station => station.id !== this.selectedStationToDelete!);
+        }
+        this.getStations();
+      },
+      (error) => {
+        console.error('Error deleting direction:', error);
+      }
+    );
+}
 }

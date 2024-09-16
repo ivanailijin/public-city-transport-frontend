@@ -177,7 +177,7 @@
                 </div>
               </div>
               <div *ngIf="direction.stations.length === 0" class="fw-semibold secondary" style="color: #ac1212; text-underline-offset: 8px;">
-                There are no stations on line 12.
+                There are no stations on direction <strong>{{direction.name}}</strong>.
               </div>                
               <div *ngIf="direction.stations.length !== 0" class="row mb-5" style="background-color: #f0f8ff; border-radius: 10px;">
                 <div class="row mt-4">
@@ -193,6 +193,13 @@
                               <h5 class="card-title mb-4 text-dark">{{station.name}}</h5>
                             </div>
                             <p class="card-text"><span class="fw-bold text-muted">Location • </span> {{station.location.address}}</p>
+                            <button class="btn btn-light btn-outline-secondary mt-2 ms-3"
+                            style="position: absolute; top: 10px; right: 10px;"     
+                            (click)="setSelectedStation(station, direction)"
+                            data-bs-toggle="modal" 
+                            data-bs-target="#deleteStationConfirmationModal">
+                            <i class="bi bi-trash3"></i>
+                          </button>
                           </div>
                         </div>
                       </div>
@@ -445,7 +452,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="addStationModalLabel" style="color: #396b94; width: 100%; max-width: 520px;">Add new station</h3>
-                <button type="button" class="btn-close" #closeStationbutton data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" #closeStationButton data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form [formGroup]="stationForm" id ="addStationForm" class="needs-validation"  novalidate>
@@ -474,5 +481,23 @@
                 </form>
             </div>
         </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deleteStationConfirmationModal" tabindex="-1" aria-labelledby="deleteStationConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteStationConfirmationModalLabel" style="color: #396b94; width: 100%; max-width: 520px;">Confirm delete</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to remove station <strong>{{ selectedStationNameToDelete }}</strong> from direction <strong>{{ selectedDirectionName }}</strong>?</p>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-primary" (click)="deleteStation()" data-bs-dismiss="modal"
+          style="background-color: #4682B4; color: white; width:55%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;">Delete</button>
+        </div>
+      </div>
     </div>
   </div>
