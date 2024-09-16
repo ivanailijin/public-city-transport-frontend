@@ -71,7 +71,7 @@
                 </button>
               </div>
             </div>
-            <div class="row" style="width: 1010px;">
+            <div class="row"*ngIf="line.buses.length !== 0" style="width: 1010px;">
               <table class="table border-top-color: 2px solid #396b94;">
                 <thead class="table-header">
                   <tr>
@@ -101,6 +101,9 @@
                 </tbody>
               </table>
             </div>
+            <div *ngIf="line.buses.length === 0" class="fw-semibold secondary" style="color: #ac1212; text-underline-offset: 8px;">
+              There are no buses on line 12.
+            </div>
         </div>
         <div *ngIf="selectedNavItem === 'directions'" class="row">
             <div class="row">
@@ -128,8 +131,8 @@
                     </div>
                   </div>
                   <h6 class="mt-3 text-body-secondary">• First Station - {{direction.firstStation}}</h6>
-                  <div class="row mt-5" style="background-color: #f0f8ff;">
-                    <div class="col-12 d-flex align-items-center  justify-content-between">
+                  <div class="row mt-5 mb-2" style="background-color: #e6f4fd; border-radius: 10px;">
+                    <div class="col-12 d-flex align-items-center  justify-content-between" style="height: 50px;">
                       <h5 class="fw-semibold" style="color: #396b94; text-underline-offset: 8px;">
                         Departures
                       </h5>
@@ -140,15 +143,65 @@
                       </button>
                     </div>
                   </div>                 
-                  <div class="row">
+                  <div class="row mb-5" style="background-color: #f0f8ff; border-radius: 10px;">
                     <app-departure-list
                       [direction]="direction"
                     ></app-departure-list>
                   </div>
                 </div>
               </div> 
+              <div *ngIf="line.directions.length === 0" class="fw-semibold secondary" style="color: #ac1212; text-underline-offset: 8px;">
+                There are no directions and departures on line 12.
+              </div>
           </div>
         <div *ngIf="selectedNavItem === 'stations'" class="row" style="margin-left:0.5%">
+          <div class="row">
+            <div class="col me-5" style="max-width: 500px;" *ngFor="let direction of line.directions">
+              <div class="row">
+                <div class="col-12 d-flex align-items-center">
+                  <h4 class="mt-3 fw-bold" style="color: #396b94; text-decoration: underline; text-underline-offset: 8px;">
+                    {{direction.name}}
+                  </h4>
+                </div>
+              </div>
+              <div class="row mt-5 mb-2" style="background-color: #e6f4fd; border-radius: 10px;">
+                <div class="col-12 d-flex align-items-center  justify-content-between" style="height: 50px;">
+                  <h5 class="fw-semibold" style="color: #396b94; text-underline-offset: 8px;">
+                    Stations
+                  </h5>
+                  <button type="button" class="btn ms-3" style="border-color: #396b94; background-color: #396b94; color: white; padding: 5px 9px; font-size: 14px; border-radius: 5px;"
+                          data-bs-toggle="modal" data-bs-target="#addStationModal"
+                          (click)="setSelectedDirection(direction)" (click)="resetStationForm()">
+                          <i class="bi bi-plus-lg"></i> Add Station
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="direction.stations.length === 0" class="fw-semibold secondary" style="color: #ac1212; text-underline-offset: 8px;">
+                There are no stations on line 12.
+              </div>                
+              <div *ngIf="direction.stations.length !== 0" class="row mb-5" style="background-color: #f0f8ff; border-radius: 10px;">
+                <div class="row mt-4">
+                  <div class="col-md-12">
+                    <div class="card mb-3 mx-auto" style="max-width: 680px;" *ngFor="let station of direction.stations">
+                      <div class="row g-0">
+                        <div class="col-md-4">
+                          <img src="assets/pictures/station-icon.jpg" class="img-fluid rounded-start" alt="Line Icon" style="height: 145px; width:160px; object-fit: cover;">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                              <h5 class="card-title mb-4 text-dark">{{station.name}}</h5>
+                            </div>
+                            <p class="card-text"><span class="fw-bold text-muted">Location • </span> {{station.location.address}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div> 
       </div>
     </div>
 </div>
@@ -383,6 +436,43 @@
                   </div>
               </form>
           </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addStationModal" tabindex="-1" aria-labelledby="addStationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="addStationModalLabel" style="color: #396b94; width: 100%; max-width: 520px;">Add new station</h3>
+                <button type="button" class="btn-close" #closeStationbutton data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="stationForm" id ="addStationForm" class="needs-validation"  novalidate>
+                  <div class="mb-3 position-relative">
+                    <label for="station" class="form-label">Select Station:</label>
+                    <select id="station" class="form-control"
+                            (change)="onStationSelect($event)" formControlName="stationId"
+                             required>
+                      <option value="" disabled selected>Select station</option>
+                      <option *ngFor="let station of stationsForSelect" [value]="station.id">
+                        {{ station.name }}
+                      </option>
+                    </select>
+  
+                    <div class="invalid-feedback">
+                     Please select a station.
+                    </div>
+                  </div>
+                  
+                    <div class="modal-footer me-4 justify-content-center">
+                      <button type="submit" id="closeModal" class="btn" style="background-color: #4682B4; color: white; width:55%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;" 
+                       (click)="validateStationForm($event)">
+                          Submit
+                      </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
   </div>

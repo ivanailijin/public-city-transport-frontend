@@ -5,7 +5,7 @@ import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
 import { PagedResults } from 'src/app/shared/model/paged-results';
 import { Line, LineOut } from './model/line.model';
-import { Station } from './model/station.model';
+import { Station, StationOut } from './model/station.model';
 import { Location } from './model/location.model';
 import { Direction, DirectionOut } from './model/direction.model';
 import { Departure } from './model/departure.model';
@@ -75,14 +75,6 @@ export class TransportService {
     return this.http.get<LineOut>(`${environment.apiHost}line/removeBus/${busId}/${lineId}`);
   }
 
-  addStation(stationId: number, lineId: number): Observable<LineOut> {
-    return this.http.get<LineOut>(`${environment.apiHost}line/addStation/${stationId}/${lineId}`);
-  }
-
-  removeStation(stationId: number, lineId: number): Observable<LineOut> {
-    return this.http.get<LineOut>(`${environment.apiHost}line/removeStation/${stationId}/${lineId}`);
-  }
-
   getLineWithRelations(lineId: number): Observable<LineOut> {
     return this.http.get<LineOut>(environment.apiHost + 'line/getWithRelations/' + lineId);
   }
@@ -102,6 +94,10 @@ export class TransportService {
 
   deleteStation(id: number): Observable<Station> {
     return this.http.delete<Station>(environment.apiHost + 'station/delete/' + id);
+  }
+
+  getAllStationsWithRelations(): Observable<StationOut[]> {
+    return this.http.get<StationOut[]>(environment.apiHost + 'station/getAllWithRelations');
   }
 
   //LOCATIONS
@@ -140,6 +136,14 @@ export class TransportService {
 
   getDirectionWithRelations(directionId: number): Observable<DirectionOut> {
     return this.http.get<DirectionOut>(environment.apiHost + 'direction/getWithRelations/' + directionId);
+  }
+
+  addStation(stationId: number, directionId: number): Observable<DirectionOut> {
+    return this.http.get<DirectionOut>(`${environment.apiHost}direction/addStation/${stationId}/${directionId}`);
+  }
+
+  removeStation(stationId: number, directionId: number): Observable<DirectionOut> {
+    return this.http.get<DirectionOut>(`${environment.apiHost}direction/removeStation/${stationId}/${directionId}`);
   }
 
   //DEPARTURES

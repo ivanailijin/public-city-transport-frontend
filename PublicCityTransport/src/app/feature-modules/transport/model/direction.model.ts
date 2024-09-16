@@ -1,5 +1,6 @@
 import { Departure } from "./departure.model";
 import { Line } from "./line.model";
+import { Station, StationOut } from "./station.model";
 
 export interface Direction {
     id: number;
@@ -15,4 +16,5 @@ export interface DirectionOut {
     lineId: number;
     line: Line;
     departures: Departure[]
+    stations: StationOut[]
 }

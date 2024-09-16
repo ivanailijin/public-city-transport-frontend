@@ -23,7 +23,8 @@ export class DepartureListComponent implements OnInit{
       length: 0,
       time: 0
     },
-    departures: []
+    departures: [],
+    stations: []
   };
 
   departures: Departure[] = [];

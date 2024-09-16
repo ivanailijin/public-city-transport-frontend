@@ -19,7 +19,6 @@ export interface LineOut {
     time: number;
     buses: Bus[];
     directions: DirectionOut[];
-    stations: Station[];
 }
 
 export enum LineType {

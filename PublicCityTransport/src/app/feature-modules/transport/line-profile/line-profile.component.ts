@@ -10,6 +10,7 @@ import { Bus } from '../model/bus.model';
 import { PagedResults } from 'src/app/shared/model/paged-results';
 import { Direction } from '../model/direction.model';
 import { Departure } from '../model/departure.model';
+import { Station, StationOut } from '../model/station.model';
 
 @Component({
   selector: 'app-line-profile',
@@ -22,6 +23,7 @@ export class LineProfileComponent implements OnInit {
   @ViewChild('closeEditButton') closeEditButton!: ElementRef | undefined;
   @ViewChild('closeDirectionButton') closeDirectionButton!: ElementRef | undefined;
   @ViewChild('closeDepartureButton') closeDepartureButton!: ElementRef | undefined;
+  @ViewChild('closeStationButton') closeStationButton!: ElementRef | undefined;
 
   constructor(private transportService: TransportService, private authService: AuthService, private route: ActivatedRoute,
     private router: Router, private stakeholdersService: StakeholdersService, private renderer: Renderer2){}
@@ -37,7 +39,6 @@ export class LineProfileComponent implements OnInit {
     time: 0,
     buses: [],
     directions: [],
-    stations: []
   }
 
   user: User = {
@@ -73,6 +74,8 @@ export class LineProfileComponent implements OnInit {
   days: string[] = ['Workday', 'Saturday', 'Sunday'];
   selectedDirectionName: string = '';
   selectedDirectionId: number | undefined;
+  selectedStationId: number = 0;
+  stationsForSelect: StationOut[] = [];
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -122,6 +125,10 @@ departureForm = new FormGroup({
   day: new FormControl('', [Validators.required]),
   time: new FormControl('', [Validators.required]),
   });
+
+stationForm = new FormGroup({
+    stationId: new FormControl('', [Validators.required])
+    });
   
 
     showInfo() {
@@ -145,6 +152,11 @@ departureForm = new FormGroup({
     this.selectedBusId = Number(target.value);
   }
   
+  onStationSelect(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    this.selectedStationId = Number(target.value);
+  }
+
   getEmployee(): void {
     this.authService.user$.subscribe(user => {
       this.user = user;
@@ -167,7 +179,8 @@ departureForm = new FormGroup({
     this.transportService.getLineWithRelations(id).subscribe((result: any) => {
       this.line = result;
       console.log(this.line)
-      this.getBuses()
+      this.getBuses();
+      this.getStations();
       const lineTypeValue = this.line.lineType === LineType.city ? 'city' : 'suburban';
       this.lineForm.patchValue({
         name: this.line.name,
@@ -186,6 +199,18 @@ departureForm = new FormGroup({
         );
       }
     )
+  }
+
+  getStations() {
+    this.transportService.getAllStationsWithRelations().subscribe(
+      (result: StationOut[]) => {
+        this.stationsForSelect = result.filter(station => 
+          !this.line.directions.some(direction => 
+            direction.stations.some(stationDir => stationDir.id === station.id)
+          )
+        );
+      }
+    );
   }
 
   addBus() {
@@ -392,13 +417,46 @@ validateDepartureForm(event: Event) {
   }
 }
 
+addStation() {
+  this.transportService.addStation(this.selectedStationId, this.selectedDirectionId!).subscribe({
+    next: () => {
+      this.getLineWithRelations(this.lineId);
+    }
+  });
+}
+
+resetStationForm() {
+  const htmlForm = document.querySelector('#addStationForm');
+  if (htmlForm) {
+    htmlForm.classList.remove('was-validated');
+  }
+  this.stationForm.reset();
+  this.isSubmitted = false;
+}
+
+validateStationForm(event: Event) {
+  event.preventDefault(); 
+
+  this.isSubmitted = true; 
+  const htmlForm = document.querySelector('#addStationForm');
+  this.renderer.addClass(htmlForm, 'was-validated');
+ 
+  if (this.stationForm.valid) {
+      this.addStation(); 
+      if (this.closeStationButton) {
+        this.closeStationButton.nativeElement.click();
+      }
+      this.resetStationForm();
+  } else {
+      this.busForm.markAllAsTouched(); 
+  }
+}
+
 getWorkdayDepartures(directionId: number): Departure[] {
   const departures = this.getDepartures(directionId);
   
-  // Filtriranje departura za 'Workday'
   const workdayDepartures = departures.filter(dep => dep.day === 'Workday');
 
-  // Sortiranje po vremenu
   const sortedDepartures = workdayDepartures.sort((a, b) => {
     return new Date(`1970-01-01T${a.time}Z`).getTime() - new Date(`1970-01-01T${b.time}Z`).getTime();
   });

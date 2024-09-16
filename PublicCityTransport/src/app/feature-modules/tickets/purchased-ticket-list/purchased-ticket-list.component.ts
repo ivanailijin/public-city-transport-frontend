@@ -73,7 +73,9 @@ export class PurchasedTicketListComponent implements OnInit{
   getUnpersonalizedTickets(){
     this.ticketService.getCustomerUnpersonalizedTickets(this.user.id).subscribe(
       (result: CustomerUnpersonalizedTicketOut[]) => {
-        this.unpersonalizedTickets = result;
+        this.unpersonalizedTickets = result.sort((a, b) => {
+          return new Date(b.purchaseDate).getTime() - new Date(a.purchaseDate).getTime();
+        });
       }
     )
   }
@@ -81,7 +83,9 @@ export class PurchasedTicketListComponent implements OnInit{
   getPersonalizedTickets(){
     this.ticketService.getCustomerPersonalizedTickets(this.user.id).subscribe(
       (result: CustomerPersonalizedTicketOut[]) => {
-        this.personalizedTickets = result;
+        this.personalizedTickets = result.sort((a, b) => {
+          return new Date(b.purchaseDate).getTime() - new Date(a.purchaseDate).getTime();
+        });
       }
     )
   }

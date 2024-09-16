@@ -75,7 +75,7 @@ export class NavbarComponent implements OnInit {
             console.error('Error fetching employee:', err); 
           }
         });
-      }else if(this.user && this.user.role === 0 && this.user.id){
+      }else if(this.user && String(this.user.role) === 'customer' && this.user.id){
         this.stakeholdersService.getCustomer(this.user.id).subscribe({
           next: (result: Customer) => {
             this.customer = result;
