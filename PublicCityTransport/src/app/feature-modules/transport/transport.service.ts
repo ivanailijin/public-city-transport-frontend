@@ -162,4 +162,10 @@ export class TransportService {
   deleteDeparture(id: number): Observable<Departure> {
     return this.http.delete<Departure>(environment.apiHost + 'departure/delete/' + id);
   }
+
+  //PDF
+  downloadPdf(lineId: number): Observable<Blob> {
+    const url = `${environment.apiHost}pdf/download/${lineId}`;
+    return this.http.get(url, { responseType: 'blob' });
+  }
 }

@@ -515,4 +515,20 @@ public lineTypeToString(line: LineType): string {
 navigatetoStation() {
   this.router.navigate(['/create-station', { lineId: this.lineId }]);
 }
+
+downloadPdf() {
+  this.transportService.downloadPdf(this.lineId).subscribe((response) => {
+    const blob = new Blob([response], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `RedVoznje_${this.lineId}.pdf`;
+    link.click();
+
+    window.URL.revokeObjectURL(url);
+  }, error => {
+    console.error('Greška prilikom preuzimanja PDF-a:', error);
+  });
+}
 }

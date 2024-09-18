@@ -113,6 +113,11 @@
                            (click)="resetDirectionForm()">
                       Add Direction
                   </button>
+                  <button *ngIf="line.directions.length == 2" type="button" class="btn" 
+                  style="background-color: #4682B4; color: white; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px; margin-right: 10px;"
+                  (click)="downloadPdf()">
+                    Download PDF
+                  </button>
                 </div>
               </div>
               <div class="row">
