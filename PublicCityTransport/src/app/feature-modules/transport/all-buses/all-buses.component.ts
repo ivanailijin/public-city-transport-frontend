@@ -19,6 +19,18 @@ export class AllBusesComponent implements OnInit{
       (result: any) => {
         this.buses = result.results;
         console.log(this.buses)
+        this.buses.sort((a: any, b: any) => {
+          const nameA = parseFloat(a.yearOfProduction);
+          const nameB = parseFloat(b.yearOfProduction);
+  
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        });
       }
     )
   }

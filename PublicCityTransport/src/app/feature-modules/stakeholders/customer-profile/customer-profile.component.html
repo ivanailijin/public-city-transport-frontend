@@ -88,7 +88,7 @@
                     Please provide a valid address. Example: Street 42, City.
                 </div>
             </div>
-            <div class="label-item">
+            <div class="label-item" style="margin-left:43%">
                 <label class="undo" *ngIf="editMode" (click)="switchMode(false)">Undo</label>
             </div>
 
@@ -96,6 +96,6 @@
                 <button class="btn mt-3" type="submit" style="background-color: #4682B4; color: white; width:65%; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px;">Save</button>
               </div>
         </form>
-        <button *ngIf="!editMode" (click)="switchMode(true)">Edit profile</button>
+        <button *ngIf="!editMode" (click)="switchMode(true)" style="background-color: #4682B4; color: white; width:75%; margin-left:12%; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px;">Edit profile</button>
     </div>
 </div>

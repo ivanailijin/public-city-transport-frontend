@@ -100,7 +100,7 @@ export class EmployeeRegistrationComponent {
       phoneNumber: this.registrationForm.value.phoneNumber || "",
       address: this.registrationForm.value.address || "",
       birthDate: birthDate,
-      educationalBackground: this.registrationForm.value.surname || "",
+      educationalBackground: this.registrationForm.value.educationalBackground || "",
     };
 
     if (this.registrationForm.valid) {

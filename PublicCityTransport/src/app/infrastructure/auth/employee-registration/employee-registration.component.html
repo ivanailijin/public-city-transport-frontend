@@ -4,7 +4,7 @@
         <form class="row g-3 needs-validation" [formGroup]="registrationForm" (ngSubmit)="register()" novalidate>
             <div class="mb-2">
                 <label for="validationName" class="form-label">First name</label>
-                <input type="text" class="form-control" id="validationName" formControlName="name" required>
+                <input type="text" class="form-control" id="validationName" formControlName="name" placeholder="Enter Name" required>
                 <div class="valid-feedback">
                     Looks good!
                 </div>
@@ -14,7 +14,7 @@
             </div>
             <div class="mb-2">
                 <label for="validationSurname" class="form-label">Last name</label>
-                <input type="text" class="form-control" id="validationSurname" formControlName="surname" required>
+                <input type="text" class="form-control" id="validationSurname" formControlName="surname" placeholder="Enter Last Name" required>
                 <div class="valid-feedback">
                     Looks good!
                 </div>
@@ -25,7 +25,7 @@
             <div class="mb-2">
                 <label for="validationEmail" class="form-label">Email</label>
                 <div class="input-group has-validation">
-                    <input type="email" class="form-control" id="validationEmail" formControlName="email" required placeholder="example@gmail.com" 
+                    <input type="email" class="form-control" id="validationEmail" formControlName="email" required placeholder="Enter E-mail: example@gmail.com" 
                     [ngClass]="{ 'is-invalid': registrationForm.get('email')?.invalid && formSubmitted}">
                     <div class="valid-feedback">
                         Looks good!
@@ -95,8 +95,8 @@
             </div>
             
             <div class="mb-2">
-                <label for="validationPhoneNumber" class="form-label">Phone</label>
-                <input type="text" class="form-control" formControlName="phoneNumber" pattern="[0-9]+" required>
+                <label for="validationPhoneNumber" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" formControlName="phoneNumber" pattern="[0-9]+" placeholder="Phone Number" required>
                 <div class="valid-feedback">
                     Looks good!
                 </div>
@@ -106,7 +106,7 @@
             </div>
             <div class="mb-2">
                 <label for="validationAddress" class="form-label">Address</label>
-                <input type="text" class="form-control" id="validationCustom03" formControlName="address" placeholder="Street 42, City" 
+                <input type="text" class="form-control" id="validationCustom03" formControlName="address" placeholder="Enter address: Street 42, City" 
                 pattern='^[a-zA-Z\s]+ \d+, [a-zA-Z\s]+$' required>
                 <div class="valid-feedback">
                     Looks good!
@@ -127,7 +127,7 @@
             </div>
             <div class="mb-2">
                 <label for="validationEducationalBackground" class="form-label">Educational Background</label>
-                <input type="text" class="form-control" id="validationEducationalBackground" formControlName="educationalBackground" required>
+                <input type="text" class="form-control" id="validationEducationalBackground" formControlName="educationalBackground" placeholder="Enter Educational Background" required>
                 <div class="valid-feedback">
                     Looks good!
                 </div>

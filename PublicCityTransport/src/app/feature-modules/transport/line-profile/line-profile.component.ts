@@ -199,6 +199,18 @@ stationForm = new FormGroup({
         this.busesForSelect = result.results.filter(bus => 
           !this.line.buses.some(lineBus => lineBus.id === bus.id)
         );
+        this.busesForSelect.sort((a: any, b: any) => {
+          const nameA = parseFloat(a.yearOfProduction);
+          const nameB = parseFloat(b.yearOfProduction);
+  
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        });
       }
     )
   }
@@ -498,5 +510,9 @@ public lineTypeToString(line: LineType): string {
         console.error('Error deleting direction:', error);
       }
     );
+}
+
+navigatetoStation() {
+  this.router.navigate(['/create-station', { lineId: this.lineId }]);
 }
 }

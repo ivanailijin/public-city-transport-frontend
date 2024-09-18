@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TransportService } from '../transport.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Station } from '../model/station.model';
@@ -16,8 +16,9 @@ export class CreateStationFormComponent implements OnInit{
   longitude: number = 0;
   locationId: number = 0;
   locations: Location[] = [];
+  lineId: number = 0;
 
-  constructor(private router: Router, private transportService: TransportService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private transportService: TransportService) {}
 
   stationRegistrationForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -27,6 +28,9 @@ export class CreateStationFormComponent implements OnInit{
     });
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.lineId = +params['lineId']; 
+    });
     (() => {
       'use strict';
   
@@ -71,7 +75,7 @@ export class CreateStationFormComponent implements OnInit{
     if (this.stationRegistrationForm.valid && this.latitude != 0 && this.longitude != 0) {
       this.transportService.createStation(stationRegistration).subscribe({
         next: () => {
-          this.router.navigate(['all-stations'])
+          this.router.navigate([`/line-profile/${this.lineId}`]);
         }
       });
     }

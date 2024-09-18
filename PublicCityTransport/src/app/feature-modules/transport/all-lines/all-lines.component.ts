@@ -18,6 +18,18 @@ export class AllLinesComponent implements OnInit {
     this.transportService.getAllLines().subscribe(
       (result: any) => {
         this.lines = result.results;
+        this.lines.sort((a: any, b: any) => {
+          const nameA = parseFloat(a.name);
+          const nameB = parseFloat(b.name);
+  
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        });
       }
     )
   }

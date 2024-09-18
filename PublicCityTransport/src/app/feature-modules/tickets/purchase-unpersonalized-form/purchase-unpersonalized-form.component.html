@@ -18,7 +18,7 @@
           <div class="mb-3">
               <label for="cardSelect" class="form-label">Select Ticket</label>
               <select id="cardSelect" class="form-select" formControlName="selectedTicketId" (change)="onCardChange($event)" [disabled]="!selectedLineId" required>
-                  <option *ngFor="let ticket of tickets" [value]="ticket.id">{{ ticket.zone }}, {{ticket.unpersonalizedType}}</option>
+                  <option *ngFor="let ticket of tickets" [value]="ticket.id">{{ ticket.zone }}, {{unpersonalizedTypeToString(ticket.unpersonalizedType)}}</option>
               </select>
               <div class="valid-feedback">
                   Looks good!
@@ -67,7 +67,10 @@
             <div class="invalid-feedback">
                 Please select departure.
             </div>
-            <p>Price: {{ selectedTicket.currentPrice }}</p>
+            <div class="mt-3">
+                <p style="font-weight: 500;">Price: {{ selectedTicket.currentPrice }} RSD</p>
+            </div>
+            
         </div>
 
           <div class="col-12 text-center">

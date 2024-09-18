@@ -5,7 +5,7 @@ import { TransportService } from '../../transport/transport.service';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { Line, } from '../../transport/model/line.model';
-import { Unpersonalized } from '../model/ticket.model';
+import { Unpersonalized, UnpersonalizedType } from '../model/ticket.model';
 import { Departure } from '../../transport/model/departure.model';
 import { DirectionOut } from '../../transport/model/direction.model';
 import { Router } from '@angular/router';
@@ -189,6 +189,19 @@ export class PurchaseUnpersonalizedFormComponent implements OnInit {
           this.router.navigate(['/all-purchased-tickets']);
         });
       }
+    }
+  }
+
+  public unpersonalizedTypeToString(type: UnpersonalizedType): string {
+    switch (type) {
+      case UnpersonalizedType.onetimeticket:
+        return 'One Time Ticket';
+      case UnpersonalizedType.dayticket:
+        return 'Day Ticket';
+      case UnpersonalizedType.weeklyticket:
+          return 'Weekly Ticket';
+      default:
+        return 'One Time Ticket';
     }
   }
 }

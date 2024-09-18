@@ -4,12 +4,12 @@
       <form class="row g-3 needs-validation" [formGroup]="busRegistrationForm" (ngSubmit)="createBus()" novalidate>
           <div class="mb-2">
               <label for="garageNumber" class="form-label">Garage Number</label>
-              <input type="text" class="form-control" id="garageNumber" formControlName="garageNumber" required>
+              <input type="text" class="form-control" id="garageNumber" formControlName="garageNumber" pattern="[0-9]+" required>
               <div class="valid-feedback">
                   Looks good!
               </div>
               <div class="invalid-feedback">
-                  Please enter garage number.
+                Garage number must consist of numbers only!
               </div>
           </div>
           <div class="mb-2">
@@ -41,7 +41,7 @@
                   Looks good!
               </div>
               <div class="invalid-feedback">
-                  Year Of Production must contain only numbers!
+                  Year Of Production must consist of numbers only!
               </div>
           </div>
           <div class="mb-2">
