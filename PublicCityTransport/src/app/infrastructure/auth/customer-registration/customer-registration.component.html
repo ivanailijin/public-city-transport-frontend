@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center align-items-center mt-5 mb-5 flex-column">
     <h3 class="text-center mb-4" style="color: #4682B4;">Registration</h3>
     <div class="card shadow-lg p-4 custom-width border" style="border-radius: 10px; background-color: #f7f9fc;">
-      <form class="row g-3 needs-validation" [formGroup]="registrationForm" (ngSubmit)="register()" novalidate>
+      <form class="row g-3 needs-validation" id="registerCustomerForm" [formGroup]="registrationForm" novalidate>
           <div class="mb-2">
               <label for="validationName" class="form-label">First name</label>
               <input type="text" class="form-control" id="validationName" formControlName="name" required placeholder="Enter Name">
@@ -60,12 +60,8 @@
                   formControlName="passwordConfirmation" 
                   required 
                   [ngClass]="{
-                  'is-invalid': registrationForm.hasError('passwordMismatch') && registrationForm.get('passwordConfirmation')?.touched,
-                  'is-valid': !registrationForm.hasError('passwordMismatch') && registrationForm.get('passwordConfirmation')?.touched && registrationForm.get('password')?.value === registrationForm.get('passwordConfirmation')?.value
+                  'is-invalid': registrationForm.hasError('passwordMismatch') && registrationForm.get('passwordConfirmation')?.touched
                   }">
-              <div class="valid-feedback">
-                  Looks good!
-              </div>
               <div class="invalid-feedback" *ngIf="registrationForm.hasError('passwordMismatch') && registrationForm.get('passwordConfirmation')?.touched">
                   Passwords do not match.
               </div>

@@ -45,42 +45,46 @@ export class CustomerRegistrationComponent {
   }
 
   ngOnInit(): void {
-    (() => {
-      'use strict';
+    this.validateCustomerForm();
+  }
+
+  validateCustomerForm(){
+    const htmlForm = document.querySelector('#registerCustomerForm') as HTMLFormElement;
+
+    if (htmlForm) {
+      const genderRadios = htmlForm.querySelectorAll('input[name="gender"]');
+      const genderGroup = htmlForm.querySelector('.d-flex');
   
-      const forms = document.querySelectorAll('.needs-validation');
-  
-      Array.from(forms).forEach(form => {
-        const htmlForm = form as HTMLFormElement;
-        const genderRadios = htmlForm.querySelectorAll('input[name="gender"]');
-        const genderGroup = htmlForm.querySelector('.d-flex');
-  
-        function validateGender() {
+      const validateGender = () => {
+        if (this.formSubmitted) {
           let isGenderValid = Array.from(genderRadios).some(radio => (radio as HTMLInputElement).checked);
           genderGroup?.classList.toggle('is-invalid', !isGenderValid);
           genderGroup?.classList.toggle('is-valid', isGenderValid);
+          return isGenderValid;
+        }
+        return true;
+      };
+  
+      htmlForm.addEventListener('submit', (event) => {
+        this.formSubmitted = true; 
+        const isGenderValid = validateGender();
+  
+        if (!isGenderValid || !this.registrationForm.valid) {
+          event.preventDefault();
+          event.stopPropagation();
+          this.registrationForm.markAllAsTouched();
+        } else {
+          this.register();
         }
   
-        genderRadios.forEach(radio => {
-          radio.addEventListener('change', validateGender);
-        });
-
-  
-        htmlForm.addEventListener('submit', event => {
-          validateGender();
-  
-          if (!htmlForm.checkValidity() || !Array.from(genderRadios).some(radio => (radio as HTMLInputElement).checked)) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-  
-          htmlForm.classList.add('was-validated');
-        }, false);
+        htmlForm.classList.add('was-validated'); 
       });
-    })();
-  }
-
   
+      genderRadios.forEach(radio => {
+        radio.addEventListener('change', validateGender);
+      });
+    }
+  }
 
   register(): void {
     this.formSubmitted = true;
@@ -100,6 +104,7 @@ export class CustomerRegistrationComponent {
       birthDate: birthDate,
     };
 
+    console.log(registration)
     if (this.registrationForm.valid) {
       this.authService.registerCustomer(registration).subscribe({
         next: () => {

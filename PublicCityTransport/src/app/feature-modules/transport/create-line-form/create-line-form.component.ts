@@ -20,39 +20,48 @@ export class CreateLineFormComponent implements OnInit {
     time: new FormControl('', [Validators.required, Validators.pattern('[0-9]+')]),
     });
 
+    formSubmitted = false;
+
   ngOnInit(): void {
-    (() => {
-      'use strict';
-  
-      const forms = document.querySelectorAll('.needs-validation');
-  
-      Array.from(forms).forEach(form => {
-        const htmlForm = form as HTMLFormElement;
-        const lineTypeRadios = htmlForm.querySelectorAll('input[name="lineType"]');
-        const lineTypeGroup = htmlForm.querySelector('.d-flex');
+    this.validateLineCreationForm();
+  }
 
-        function validateLineType() {
-          let isGenderValid = Array.from(lineTypeRadios).some(radio => (radio as HTMLInputElement).checked);
-          lineTypeGroup?.classList.toggle('is-invalid', !isGenderValid);
-          lineTypeGroup?.classList.toggle('is-valid', isGenderValid);
+  validateLineCreationForm(){
+    const htmlForm = document.querySelector('#createLineForm') as HTMLFormElement;
+
+    if (htmlForm) {
+      const lineTypeRadios = htmlForm.querySelectorAll('input[name="lineType"]');
+      const lineTypeGroup = htmlForm.querySelector('.d-flex');
+  
+      const validateLineType = () => {
+        if (this.formSubmitted) {
+          let isLineTypeValid = Array.from(lineTypeRadios).some(radio => (radio as HTMLInputElement).checked);
+          lineTypeGroup?.classList.toggle('is-invalid', !isLineTypeValid);
+          lineTypeGroup?.classList.toggle('is-valid', isLineTypeValid);
+          return isLineTypeValid;
         }
-
-        lineTypeRadios.forEach(radio => {
-          radio.addEventListener('change', validateLineType);
-        });
+        return true;
+      };
   
-        htmlForm.addEventListener('submit', event => {
-          validateLineType();
-
-          if (!htmlForm.checkValidity() || !Array.from(lineTypeRadios).some(radio => (radio as HTMLInputElement).checked)) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
+      htmlForm.addEventListener('submit', (event) => {
+        this.formSubmitted = true; 
+        const isGenderValid = validateLineType();
   
-          htmlForm.classList.add('was-validated');
-        }, false);
+        if (!isGenderValid || !this.lineRegistrationForm.valid) {
+          event.preventDefault();
+          event.stopPropagation();
+          this.lineRegistrationForm.markAllAsTouched();
+        } else {
+          this.createLine();
+        }
+  
+        htmlForm.classList.add('was-validated'); 
       });
-    })();
+  
+      lineTypeRadios.forEach(radio => {
+        radio.addEventListener('change', validateLineType);
+      });
+    }
   }
 
   createLine(): void {
@@ -68,7 +77,7 @@ export class CreateLineFormComponent implements OnInit {
     if (this.lineRegistrationForm.valid) {
       this.transportService.createLine(lineRegistration).subscribe({
         next: () => {
-          this.router.navigate(['all-lines'])
+          this.router.navigate([''])
         }
       });
     }

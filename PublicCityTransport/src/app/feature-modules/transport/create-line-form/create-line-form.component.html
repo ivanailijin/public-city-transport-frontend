@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center align-items-center mt-5 mb-5 flex-column">
     <h3 class="text-center mb-4" style="color: #4682B4;">Line Creation</h3>
     <div class="card shadow-lg p-4 custom-width border" style="border-radius: 10px; background-color: #f7f9fc;">
-      <form class="row g-3 needs-validation" [formGroup]="lineRegistrationForm" (ngSubmit)="createLine()" novalidate>
+      <form class="row g-3 needs-validation" id="createLineForm" [formGroup]="lineRegistrationForm" novalidate>
           <div class="mb-2">
               <label for="name" class="form-label">Name</label>
               <input type="text" class="form-control" id="name" pattern="[0-9]+" maxlength="2" formControlName="name" required>
