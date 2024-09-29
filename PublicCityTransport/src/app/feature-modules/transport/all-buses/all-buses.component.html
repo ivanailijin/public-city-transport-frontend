@@ -4,7 +4,7 @@
         <h3 class="" style="color: #4682B4; width: 100%; max-width: 520px; margin-left:24%">
           Buses
         </h3>
-        <button type="button" (click)="navigateToCreate()" class="btn btn-primary" style="background-color: #4682B4; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px;">
+        <button type="button" *ngIf="employee && employee.employeeRole === 2" (click)="navigateToCreate()" class="btn btn-primary" style="background-color: #4682B4; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px;">
           Create New Bus
         </button>
       </div>

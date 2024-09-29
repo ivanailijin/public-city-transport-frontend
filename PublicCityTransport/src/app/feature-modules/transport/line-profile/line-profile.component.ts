@@ -163,7 +163,7 @@ stationForm = new FormGroup({
     this.authService.user$.subscribe(user => {
       this.user = user;
       console.log('User:', this.user);
-      if (this.user && String(this.user.role) === 'employee' && this.user.id) {
+      if (this.user && this.user.role === 1 && this.user.id) {
         this.stakeholdersService.getEmployee(this.user.id).subscribe({
           next: (result: Employee) => {
             this.employee = result;

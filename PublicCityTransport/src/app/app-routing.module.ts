@@ -25,7 +25,7 @@ import { AllPersonalizedRequestsComponent } from './feature-modules/tickets/all-
 import { PurchasedTicketListComponent } from './feature-modules/tickets/purchased-ticket-list/purchased-ticket-list.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent},
+  { path: '', component: AllLinesComponent},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: EmployeeRegistrationComponent },
   { path: 'register-customer', component: CustomerRegistrationComponent },
@@ -35,7 +35,6 @@ const routes: Routes = [
   { path: 'create-line', component: CreateLineFormComponent },
   { path: 'create-station', component: CreateStationFormComponent },
   { path: 'all-buses', component: AllBusesComponent},
-  { path: 'all-lines', component: AllLinesComponent},
   { path: 'all-stations', component: AllStationsComponent},
   { path: 'bus-profile/:id', component: BusProfileComponent },
   { path: 'line-profile/:id', component: LineProfileComponent },

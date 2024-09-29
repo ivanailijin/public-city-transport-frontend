@@ -3,37 +3,28 @@
     <img src="https://online.gspns.rs/sr/fileGetter/logo/JGSP-Novi-Sad-logo-2.jpg" alt="jgsp" width="90" height="30">
   </a>
     <ul class="navbar-nav mx-auto d-flex justify-content-center">
-      <li class="nav-item dropdown" *ngIf="user && user.email.trim().length > 0">
+      <li class="nav-item dropdown" *ngIf="(user && user.role == 0) || (employee && employee.employeeRole === 3)">
         <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           Tickets
         </a>
         <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" [routerLink]="['all-purchased-tickets']">Purchased Tickets</a></li>
-          <li><a class="dropdown-item" [routerLink]="['create-nonpersonalized-ticket']">Create Non-Personalized Ticket</a></li>
-          <li><a class="dropdown-item" [routerLink]="['create-personalized-ticket']">Create Personalized Ticket</a></li>
-          <li><a class="dropdown-item" [routerLink]="['all-personalized-ticket-requests']">All Personalized Ticket requests</a></li>
+          <li *ngIf="user && user.role == 0 && user.email.trim().length > 0"><a class="dropdown-item" [routerLink]="['all-purchased-tickets']">Purchased Tickets</a></li>
+          <li *ngIf="employee && employee.employeeRole === 3"><a class="dropdown-item" [routerLink]="['create-nonpersonalized-ticket']">Create Non-Personalized Ticket</a></li>
+          <li *ngIf="employee && employee.employeeRole === 3"><a class="dropdown-item" [routerLink]="['create-personalized-ticket']">Create Personalized Ticket</a></li>
+          <li *ngIf="user && user.role == 0 && user.email.trim().length > 0"><a class="dropdown-item" [routerLink]="['all-personalized-ticket-requests']">All Personalized Ticket requests</a></li>
         </ul>
       </li>
       <li class="nav-item" *ngIf="user && user.role == 0 && user.email.trim().length > 0">
-        <a class="nav-link" (click)="getWalletByCustomerId()">Wallet</a>
+        <a class="nav-link" (click)="getWalletByCustomerId()" style="cursor: pointer;">Wallet</a>
       </li>
-      <li class="nav-item dropdown" *ngIf="user && user.email.trim().length > 0">
-        <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Transport
-        </a>
-        <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" [routerLink]="['all-buses']">All buses</a></li>
-          <li><a class="dropdown-item" [routerLink]="['all-lines']">All lines</a></li>
-        </ul>
+      <li class="nav-item">
+        <a class="nav-link" href="/">Transport Lines</a>
       </li>
-      <li class="nav-item dropdown" *ngIf="user && employee.employeeRole == 3 && user.email.trim().length > 0">
-        <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Employees
-        </a>
-        <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" [routerLink]="['register']">Register new employee</a></li>
-          <li><a class="dropdown-item">All employees</a></li>
-        </ul>
+      <li class="nav-item" *ngIf="user && user.role === 1">
+        <a class="nav-link" href="/all-buses">Buses</a>
+      </li>
+      <li class="nav-item" *ngIf="employee && employee.employeeRole == 3 && user.email.trim().length > 0">
+        <a class="nav-link" href="/register">Register Employee</a>
       </li>
     </ul>
   <ul class="navbar-nav" style="margin-right: 20px;">

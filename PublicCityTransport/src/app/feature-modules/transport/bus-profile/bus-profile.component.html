@@ -10,7 +10,7 @@
           <h1 class="mt-3" style="color: #396b94; width: 100%; max-width: 520px; margin-left:28%">{{bus.licencePlate}}</h1>
         </div>
         <div class="col-1" style="margin-left:39.5%">
-          <button class="btn btn-light mt-4" *ngIf="user && user.role == 1" style="border-color: #396b94; color: #396b94;"
+          <button class="btn btn-light mt-4" *ngIf="employee && employee.employeeRole == 2" style="border-color: #396b94; color: #396b94;"
           data-bs-toggle="modal" data-bs-target="#editBusModal">
             <span class="me-2">Edit</span>
             <i class="bi bi-pencil-fill" style="color: #396b94;"></i>
@@ -59,7 +59,7 @@
             </div>
         </div>
         <div *ngIf="selectedNavItem === 'drivers'" class="row" style="margin-left:0.5%">
-            <div class="row">
+            <div class="row" *ngIf="employee && employee.employeeRole == 2">
               <div class="col-12 d-flex mb-3" style="margin-left:77%">
                 <button type="button" class="btn" style="background-color: #4682B4; color: white; width:10%; border: none; border-radius: 5px; padding: 8px 17px; font-size: 16px;" 
                         data-bs-toggle="modal" data-bs-target="#addDriverModal" (click)="resetForm()">
